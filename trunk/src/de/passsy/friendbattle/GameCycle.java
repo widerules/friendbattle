@@ -38,13 +38,24 @@ public class GameCycle {
     }
     
     public void start() {
-	mCurrentGame = getNextGame();
+	MiniGame nextGame = getNextGame();
+	if (nextGame == null){
+	    return;
+	}
+	try {
+	    mCurrentGame = nextGame.getClass().newInstance();
+	} catch (IllegalAccessException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (InstantiationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 	mCurrentGame.setOnNextGameListener(new OnNextGameListener() {
 	    
 	    @Override
 	    public void onNextGame(MiniGame game) {
 		start();
-		
 	    }
 	});
 	mRootLayout.removeAllViews();
@@ -56,14 +67,15 @@ public class GameCycle {
 	if (mMiniGames.size() <= mGameNumber){
 	    end();
 	    return null;
+	} else {
+    	    MiniGame nextGame = mMiniGames.get(mGameNumber);
+    	    mCurrentRounds++;
+    	    if (mCurrentRounds >= mRounds){
+    	        mGameNumber++;
+    	        mCurrentRounds = 0;
+    	    }	
+    	    return nextGame;
 	}
-	MiniGame nextGame = mMiniGames.get(mGameNumber); 
-	mCurrentRounds++;
-	if (mCurrentRounds > mRounds){
-	    mGameNumber++;
-	    mCurrentRounds = 0;
-	}	
-	return nextGame;
     }
     
     private void end() {

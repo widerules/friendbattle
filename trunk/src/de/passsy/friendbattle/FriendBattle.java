@@ -85,6 +85,7 @@ public class FriendBattle extends Activity {
         mDifficulty = extras.getInt("difficulty");
         mPlayerNumber = extras.getInt("players");
         mRounds = extras.getInt("rounds");
+        Log.v("tag",mRounds+"");
     }
     
     private void linkPlayerAndButtons(){
