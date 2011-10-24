@@ -20,13 +20,15 @@ public class GameMenu extends Activity {
 
     public final static String GAME_PREF = "GamePreferences";
     private int mPlayers = 6;
-    private String mGameVersion = "0.001";
+    private int mRounds = 3;
+    private String mGameVersion = "0.01";
 
     private final static int EASY = 0;
     private final static int NORMAL = 1;
     private final static int HARD = 2;
 
     private ArrayList<String> mGames = new ArrayList<String>();
+    
 
     /** Called when the activity is first created. */
     @Override
@@ -61,7 +63,7 @@ public class GameMenu extends Activity {
 	}	
 	
 	mPlayers = settings.getInt("players", 2);
-	// TODO 99 to maxgames
+	// TODO 10 to maxgames
 	for (int i = 0; i < 10; i++) {
 	    String key = "game" + i;
 	    if (settings.contains(key)) {
@@ -85,6 +87,7 @@ public class GameMenu extends Activity {
 	SharedPreferences.Editor editor = settings.edit();
 	editor.putInt("players", mPlayers);
 	editor.putString("version", mGameVersion);
+	editor.putInt("rounds", mRounds);
 	for (int i = 0; i < mGames.size() - 1; i++) {
 	    editor.putString("game" + i, mGames.get(i));
 	}
@@ -96,6 +99,7 @@ public class GameMenu extends Activity {
 	Bundle arguments = new Bundle();
 	arguments.putInt("players", mPlayers);
 	arguments.putInt("difficulty", NORMAL);
+	arguments.putInt("rounds", mRounds);
 	arguments.putStringArrayList("games", mGames);
 	Tools.StartActivity(FriendBattle.class, arguments);
     }

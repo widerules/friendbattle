@@ -52,15 +52,9 @@ public abstract class MiniGame extends RelativeLayout{
     public void onGuess(Player player){
 	if (getCorrectness()) {
 	    player.setPoints(player.getPoints()+1);
-	    setRounds(mRounds-1);
-	    if (getRounds()>0){
-		start();
-	    } else {
-		if (NextGameListener != null) {
-		    NextGameListener.onNextGame(MiniGame.this);
-	        }
+	    if (NextGameListener != null) {
+	        NextGameListener.onNextGame(MiniGame.this);
 	    }
-	    
 	} else {
 	    player.setPoints(player.getPoints()-1);
 	}

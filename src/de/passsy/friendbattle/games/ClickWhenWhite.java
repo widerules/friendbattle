@@ -63,8 +63,6 @@ public class ClickWhenWhite extends MiniGame{
     @Override
     public void reset() {
 	setBackgroundColor(Color.BLACK);
-	setRounds(getRounds()-1);
-	start();
     }
 
     @Override
