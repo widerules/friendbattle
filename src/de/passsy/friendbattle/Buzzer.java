@@ -1,7 +1,5 @@
 package de.passsy.friendbattle;
 
-
-import de.passsy.friendbattle.utility.Tools;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -21,14 +19,10 @@ public class Buzzer extends RelativeLayout{
     private Player mPlayer;
     private TextViewFlipped mPoints_txt;
     private ImageView mBackground;
+    private Boolean mFlipped = false;
+    private Boolean mCorrectBuzz = false;
     
-    public Player getPlayer() {
-        return mPlayer;
-    }
-
-    public void setPlayer(Player player) {
-        this.mPlayer = player;
-    }
+    
 
     private int mPoints = 0;
     private TextView mText_txt;
@@ -56,6 +50,12 @@ public class Buzzer extends RelativeLayout{
 	        case MotionEvent.ACTION_DOWN:
 	            if (mBuzzListener != null && mPlayer != null) {
 	        	mBuzzListener.onBuzz(Buzzer.this);
+	        	if (mFlipped){
+	        	    mBackground.setImageResource(mCorrectBuzz?R.drawable.buzzerupdown_green:R.drawable.buzzerupdown_red);
+	        	} else {
+	        	    mBackground.setImageResource(mCorrectBuzz?R.drawable.buzzerdownup_green:R.drawable.buzzerdownup_red);
+	        	}
+	        	setCorrectBuzz(false);
 	            }
 	            break;
 
@@ -63,6 +63,12 @@ public class Buzzer extends RelativeLayout{
 	            break;
 
 	        case MotionEvent.ACTION_UP:
+	            
+	            if (mFlipped){
+	            	mBackground.setImageResource(R.drawable.buzzerdownup);
+	            } else {
+	                mBackground.setImageResource(R.drawable.buzzerupdown);
+	            }
 	            break;
 
 	        case MotionEvent.ACTION_CANCEL:
@@ -100,8 +106,9 @@ public class Buzzer extends RelativeLayout{
 
             final boolean flipped = attributes.getBoolean(R.styleable.Buzzer_flipped, false);
             if (flipped) {
-        	mBackground.setImageResource(R.drawable.buzzer_flipped);
+        	mBackground.setImageResource(R.drawable.buzzerdownup);
         	mPoints_txt.setFlipped(true);
+        	mFlipped = true;
             }
             attributes.recycle();
         }
@@ -111,7 +118,21 @@ public class Buzzer extends RelativeLayout{
 	mPoints_txt.setText(text);
     }
     
-    
+    public Player getPlayer() {
+        return mPlayer;
+    }
+
+    public void setPlayer(Player player) {
+        this.mPlayer = player;
+    }
+
+    public Boolean getCorrectBuzz() {
+        return mCorrectBuzz;
+    }
+
+    public void setCorrectBuzz(Boolean CorrectBuzz) {
+        this.mCorrectBuzz = CorrectBuzz;
+    }
     
 
 }

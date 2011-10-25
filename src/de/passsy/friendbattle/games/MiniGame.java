@@ -51,6 +51,7 @@ public abstract class MiniGame extends RelativeLayout{
      */
     public void onGuess(Player player){
 	if (getCorrectness()) {
+	    player.getBuzzer().setCorrectBuzz(true);
 	    player.setPoints(player.getPoints()+1);
 	    if (NextGameListener != null) {
 	        NextGameListener.onNextGame(MiniGame.this);
@@ -64,11 +65,12 @@ public abstract class MiniGame extends RelativeLayout{
 	showIntroductions(HOWTO_TIME);
     };
     
+    /**
+     * shows the introduction at the beginning of every Game
+     * @param seconds
+     */
     abstract protected void showIntroductions(int seconds);
 
-    abstract public void end();
-    
-    abstract public void reset();
     
     public void onNextGame(final View v) {
         if (NextGameListener != null) {

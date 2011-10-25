@@ -37,7 +37,7 @@ public class ClickWhenWhite extends MiniGame{
     public void start() {
 	super.start();
 	
-	int time =  (int) Math.round((Math.random()*7000));
+	int time =  (int) Math.round((Math.random()*4000))+2000;
 	
             timer.schedule(new TimerTask() {
         	    
@@ -49,20 +49,10 @@ public class ClickWhenWhite extends MiniGame{
 	
 	
     }
-
-    @Override
-    public void end() {
-	
-    }
     
     private void Action() {
 	setBackgroundColor(Color.WHITE);
 	setCorrectness(true);
-    }
-
-    @Override
-    public void reset() {
-	setBackgroundColor(Color.BLACK);
     }
 
     @Override

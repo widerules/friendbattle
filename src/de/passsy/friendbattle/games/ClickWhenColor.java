@@ -49,22 +49,10 @@ public class ClickWhenColor extends MiniGame{
 	
 	
     }
-
-    @Override
-    public void end() {
-	
-    }
     
     private void Action() {
 	setBackgroundColor(Color.RED);
 	setCorrectness(true);
-    }
-
-    @Override
-    public void reset() {
-	setBackgroundColor(Color.BLACK);
-	setRounds(getRounds()-1);
-	start();
     }
 
     @Override
