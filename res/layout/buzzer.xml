@@ -2,21 +2,23 @@
 <merge
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent">
+
 	<ImageView
-		android:src="@drawable/button_small_inactive"
-		android:id="@+id/imageView1"
-		android:layout_height="fill_parent"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true"
-		android:scaleType="fitXY"
-		android:layout_width="match_parent"></ImageView>
-	<TextView
+	    android:id="@+id/background"
+	    android:layout_width="match_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true"
+	    android:scaleType="fitXY"
+	    android:src="@drawable/buzzer"/>
+	<de.passsy.friendbattle.TextViewFlipped
         android:id="@+id/points_txt"
         android:layout_height="wrap_content"
         android:text="Button"
         android:layout_width="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"></TextView>
+        android:layout_marginTop="20dp"/>
+	
 </merge>
 
