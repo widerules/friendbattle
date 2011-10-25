@@ -110,5 +110,8 @@ public class Buzzer extends RelativeLayout{
     public void setText(CharSequence text){
 	mPoints_txt.setText(text);
     }
+    
+    
+    
 
 }

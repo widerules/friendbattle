@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.passsy.friendbattle.games.ClickWhenWhite;
-import de.passsy.friendbattle.games.MiniGame;
 import de.passsy.friendbattle.utility.Tools;
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -107,7 +104,7 @@ public class GameMenu extends Activity {
 	    firstStart();
 	}	
 	
-	mPlayers = settings.getInt("players", 2);
+	setPlayers(settings.getInt("players", 2));
 	// TODO 10 to maxgames
 	for (int i = 0; i < 10; i++) {
 	    String key = "game" + i;
@@ -149,13 +146,18 @@ public class GameMenu extends Activity {
 	Tools.StartActivity(FriendBattle.class, arguments);
     }
 
-    private int getPlayers() {
-	return mPlayers;
-    }
-
     private void setPlayers(int players) {
 	mPlayers = players;
 	mPlayer_txt.setText("Ein Spiel mit " + players +" Spielern starten");
+	for(Buzzer buzzer:mBuzzer){
+	    buzzer.setVisibility(View.GONE);
+	}
+	
+	for(int i=0; i<players;i++){
+	    mBuzzer.get(i).setVisibility(View.VISIBLE);
+	};
+	mPlayerSeek.setProgress(players-2);
+	
     }
 
     private void addGames(Class<?> game) {
