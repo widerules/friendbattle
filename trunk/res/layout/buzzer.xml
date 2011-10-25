@@ -10,7 +10,7 @@
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentTop="true"
 	    android:scaleType="fitXY"
-	    android:src="@drawable/buzzer"/>
+	    android:src="@drawable/buzzerupdown"/>
 	<de.passsy.friendbattle.TextViewFlipped
         android:id="@+id/points_txt"
         android:layout_height="wrap_content"
