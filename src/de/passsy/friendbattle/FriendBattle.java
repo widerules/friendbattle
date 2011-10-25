@@ -95,12 +95,14 @@ public class FriendBattle extends Activity {
 	    player.setBuzzer(mBuzzer.get(i-1));
 	    mPlayers.add(player);
 	    player.getBuzzer().setPlayer(player);
+	    player.getBuzzer().setText("0");
 	}
 	
 	while(mBuzzer.size() > mPlayerNumber){
 	    mBuzzer.get(mPlayerNumber).setVisibility(View.GONE);
 	    mBuzzer.remove(mPlayerNumber);
 	}
+	
     }
     
     private void loadGames(){
