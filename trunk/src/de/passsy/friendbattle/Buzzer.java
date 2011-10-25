@@ -102,7 +102,6 @@ public class Buzzer extends RelativeLayout{
             if (flipped) {
         	mBackground.setImageResource(R.drawable.buzzer_flipped);
         	mPoints_txt.setFlipped(true);
-        	
             }
             attributes.recycle();
         }
