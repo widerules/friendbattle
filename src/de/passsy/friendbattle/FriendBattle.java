@@ -103,31 +103,7 @@ public class FriendBattle extends Activity {
 	}
     }
     
-    @Deprecated
-    /**
-     * 
-     * @param mCurrentGame
-     */
-    private void setCurrentGame(MiniGame mCurrentGame) {
-        this.mCurrentGame = mCurrentGame;
-        mGameModule.removeAllViews();
-        mGameModule.addView(mCurrentGame);
-        mCurrentGame.setOnNextGameListener(new OnNextGameListener() {
-	    
-	    @Override
-	    public void onNextGame(MiniGame game) {
-		startNextGame();
-		
-	    }
-	});
-    }
-
-    
     private void loadGames(){
 	mGameCycle = new GameCycle(mGameModule,mRounds);
-    }
-    
-    private void startNextGame(){
-	Tools.toast("no more Games");
     }
 }

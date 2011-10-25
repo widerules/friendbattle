@@ -1,21 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/hello" />
-	<Button
-		android:text="Start Game"
-		android:id="@+id/startgame"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></Button>
-	<TextView
-		android:text="TextView"
-		android:id="@+id/players"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:friendbattle="http://schemas.android.com/apk/res/de.passsy.friendbattle"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:id="@+id/topbuzzer"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+        <de.passsy.friendbattle.Buzzer
+            android:id="@+id/buzzer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            friendbattle:flipped="true" >
+        </de.passsy.friendbattle.Buzzer>
+
+        <de.passsy.friendbattle.Buzzer
+            android:id="@+id/buzzer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            friendbattle:flipped="true" >
+        </de.passsy.friendbattle.Buzzer>
+
+        <de.passsy.friendbattle.Buzzer
+            android:id="@+id/buzzer5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            friendbattle:flipped="true" >
+        </de.passsy.friendbattle.Buzzer>
+    </LinearLayout>
+    <SeekBar
+        android:id="@+id/playerSeek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topbuzzer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="78dp" 
+        android:max="4"
+        android:progress="0"/>
+
+    <Button
+        android:id="@+id/startgame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/botbuzzer"
+        android:layout_centerHorizontal="true"
+        android:text="Start Game" />
+
+    <LinearLayout
+        android:id="@+id/botbuzzer"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true" >
+
+        <de.passsy.friendbattle.Buzzer
+            android:id="@+id/buzzer0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </de.passsy.friendbattle.Buzzer>
+
+        <de.passsy.friendbattle.Buzzer
+            android:id="@+id/buzzer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </de.passsy.friendbattle.Buzzer>
+
+        <de.passsy.friendbattle.Buzzer
+            android:id="@+id/buzzer4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </de.passsy.friendbattle.Buzzer>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/players_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/playerSeek"
+        android:layout_below="@+id/playerSeek"
+        android:text="Ein Spiel mit 2 Spielern starten" />
+
+</RelativeLayout>

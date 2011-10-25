@@ -33,9 +33,10 @@ containing a value of this type.
         public static final int buzzer4=0x7f05000a;
         public static final int buzzer5=0x7f050005;
         public static final int gamemodule=0x7f050006;
-        public static final int players=0x7f05000c;
+        public static final int playerSeek=0x7f05000b;
+        public static final int players_txt=0x7f05000d;
         public static final int points_txt=0x7f050001;
-        public static final int startgame=0x7f05000b;
+        public static final int startgame=0x7f05000c;
         public static final int topbuzzer=0x7f050002;
     }
     public static final class layout {

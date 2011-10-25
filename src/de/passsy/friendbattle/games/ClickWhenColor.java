@@ -37,7 +37,7 @@ public class ClickWhenColor extends MiniGame{
     public void start() {
 	super.start();
 	
-	int time = 4000;
+	int time = (int) Math.round((Math.random()*10000));
 	
             timer.schedule(new TimerTask() {
         	    

@@ -1,6 +1,7 @@
 package de.passsy.friendbattle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.passsy.friendbattle.games.ClickWhenWhite;
 import de.passsy.friendbattle.games.MiniGame;
@@ -14,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 public class GameMenu extends Activity {
@@ -21,6 +24,7 @@ public class GameMenu extends Activity {
     public final static String GAME_PREF = "GamePreferences";
     private int mPlayers = 6;
     private int mRounds = 3;
+    
     private String mGameVersion = "0.01";
 
     private final static int EASY = 0;
@@ -29,6 +33,10 @@ public class GameMenu extends Activity {
 
     private ArrayList<String> mGames = new ArrayList<String>();
     
+    private SeekBar mPlayerSeek;
+    private Button mStartButton;
+    private TextView mPlayer_txt;
+    private List<Buzzer> mBuzzer = new ArrayList<Buzzer>();
 
     /** Called when the activity is first created. */
     @Override
@@ -36,8 +44,20 @@ public class GameMenu extends Activity {
 	super.onCreate(savedInstanceState);
 	Tools.setCurrentActivity(this);
 	setContentView(R.layout.gamemenu);
-	Button start_btn = (Button) findViewById(R.id.startgame);
-	start_btn.setOnClickListener(new OnClickListener() {
+	
+	findViews();
+	
+	
+	
+	loadPreferences();
+	
+
+    }
+
+    private void findViews() {
+	mPlayer_txt = (TextView) findViewById(R.id.players_txt);
+	mStartButton = (Button) findViewById(R.id.startgame);
+	mStartButton.setOnClickListener(new OnClickListener() {
 
 	    @Override
 	    public void onClick(View v) {
@@ -45,11 +65,36 @@ public class GameMenu extends Activity {
 	    }
 	});
 	
-	loadPreferences();
-	TextView players = (TextView) findViewById(R.id.players);
-	players.setText(String.valueOf(getPlayers()));
+	mPlayerSeek = (SeekBar) findViewById(R.id.playerSeek);
+	mPlayerSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+	    
+	    @Override
+	    public void onStopTrackingTouch(SeekBar seekBar) {
+		// TODO Auto-generated method stub
+		setPlayers(seekBar.getProgress()+2);
+	    }
+	    
+	    @Override
+	    public void onStartTrackingTouch(SeekBar seekBar) {
+		// TODO Auto-generated method stub
+		
+	    }
+	    
+	    @Override
+	    public void onProgressChanged(SeekBar seekBar, int progress,
+		    boolean fromUser) {
+		setPlayers(seekBar.getProgress()+2);
+	    }
+	});
 	
-
+	for (int i = 0; i < 6; i++) {
+	    String buzzerID = "buzzer" + i;
+            Buzzer buzzer = (Buzzer) findViewById(getResources().getIdentifier(buzzerID, "id", "de.passsy.friendbattle"));
+            mBuzzer.add(buzzer);
+            buzzer.setText("Player "+ (i+1));
+	}
+	
+	
     }
 
     private void loadPreferences() {
@@ -110,6 +155,7 @@ public class GameMenu extends Activity {
 
     private void setPlayers(int players) {
 	mPlayers = players;
+	mPlayer_txt.setText("Ein Spiel mit " + players +" Spielern starten");
     }
 
     private void addGames(Class<?> game) {
