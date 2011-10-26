@@ -1,6 +1,11 @@
 package de.passsy.friendbattle.games;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -16,6 +21,28 @@ public abstract class MiniGame extends RelativeLayout{
     private OnNextGameListener NextGameListener;
     
     private boolean mCorrectness = false;
+    private boolean mSolved = false;
+    
+    private Timer mNewGameTimer = new Timer();
+    private final Handler mHandler = new Handler();
+    
+    
+    final Runnable mFireTimer = new Runnable() {
+        public void run() {
+            if (NextGameListener != null) {
+	        NextGameListener.onNextGame(MiniGame.this);
+	    }
+        }
+    };
+    
+    private boolean isSolved() {
+        return mSolved;
+    }
+
+    private void setSolved(boolean mSolved) {
+        this.mSolved = mSolved;
+    }
+
     private int mRounds;
     
     public int getRounds() {
@@ -51,13 +78,24 @@ public abstract class MiniGame extends RelativeLayout{
      */
     public void onGuess(Player player){
 	if (getCorrectness()) {
+	    
 	    player.getBuzzer().setCorrectBuzz(true);
-	    player.setPoints(player.getPoints()+1);
-	    if (NextGameListener != null) {
-	        NextGameListener.onNextGame(MiniGame.this);
+	    if(!isSolved()){
+		player.setPoints(player.getPoints()+1);
 	    }
+	    setSolved(true);
+	    mNewGameTimer.schedule(new TimerTask() {
+	        
+	        @Override
+	        public void run() {
+	            mHandler.post(mFireTimer);
+	        }
+	    }, 1000);
+	    
 	} else {
-	    player.setPoints(player.getPoints()-1);
+	    if(!mSolved){
+		player.setPoints(player.getPoints()-1);
+	    }
 	}
     };
     

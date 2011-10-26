@@ -12,10 +12,10 @@ import de.passsy.friendbattle.utility.Tools;
 
 public class ClickWhenWhite extends MiniGame{
     
-    final Handler mHandler = new Handler();
-    Timer timer = new Timer();
+    private final Handler mHandler = new Handler();
+    private Timer timer = new Timer();
     
-    final Runnable mFireTimer = new Runnable() {
+    private final Runnable mFireTimer = new Runnable() {
         public void run() {
             Action();
         }
