@@ -12,8 +12,9 @@ import de.passsy.friendbattle.utility.Tools;
 
 public class ClickWhenColor extends MiniGame{
     
-    final Handler mHandler = new Handler();
-    Timer timer = new Timer();
+    private Timer timer = new Timer();
+    private final Handler mHandler = new Handler();
+    
     
     final Runnable mFireTimer = new Runnable() {
         public void run() {

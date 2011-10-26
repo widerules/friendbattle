@@ -44,11 +44,7 @@ public class GameCycle {
 	}
 	try {
 	    mCurrentGame = nextGame.getClass().newInstance();
-	} catch (IllegalAccessException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} catch (InstantiationException e) {
-	    // TODO Auto-generated catch block
+	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 	mCurrentGame.setOnNextGameListener(new OnNextGameListener() {
