@@ -30,13 +30,6 @@
             android:layout_weight="1"
             friendbattle:flipped="true"></de.passsy.friendbattle.Buzzer>
     </LinearLayout>
-	<FrameLayout
-        android:id="@+id/gamemodule"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/topbuzzer"
-        android:layout_above="@+id/botbuzzer"
-        android:layout_alignParentLeft="true"></FrameLayout>
 	<LinearLayout
 		android:layout_width="wrap_content"
 		android:id="@+id/botbuzzer"
@@ -59,5 +52,14 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="1"></de.passsy.friendbattle.Buzzer>
 	</LinearLayout>
+
+	<FrameLayout
+	    android:id="@+id/gamemodule"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/topbuzzer"
+	    android:layout_above="@+id/botbuzzer" >
+	</FrameLayout>
 	
 </RelativeLayout>

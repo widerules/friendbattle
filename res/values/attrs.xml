@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="flipped" format="boolean" />
+    
     <declare-styleable name="Buzzer">
         <attr
-            name="flipped"
-            format="boolean" />
+            name="flipped"/>
     </declare-styleable>
+    <declare-styleable name="TextViewFlipped">
+        <attr
+            name="flipped"/>
+    </declare-styleable>
+    
     
 </resources>
