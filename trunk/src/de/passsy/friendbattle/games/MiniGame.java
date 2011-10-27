@@ -79,9 +79,12 @@ public abstract class MiniGame extends RelativeLayout{
     public void onGuess(Player player){
 	if (getCorrectness()) {
 	    
-	    player.getBuzzer().setCorrectBuzz(true);
+	    
 	    if(!isSolved()){
+		player.getBuzzer().setCorrectBuzz(true);
 		player.setPoints(player.getPoints()+1);
+	    } else {
+		player.getBuzzer().setTooLateBuzz(true);
 	    }
 	    setSolved(true);
 	    mNewGameTimer.schedule(new TimerTask() {
