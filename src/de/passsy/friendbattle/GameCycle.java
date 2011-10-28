@@ -3,6 +3,7 @@ package de.passsy.friendbattle;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -55,9 +56,11 @@ public class GameCycle {
 	    return;
 	}
 	try {
+	    //TODO change nextGame from instance to Class
 	    mCurrentGame = nextGame.getClass().newInstance();
 	} catch (Exception e) {
-	    e.printStackTrace();
+	    Log.e("FriendBattle", "ClassNotFound");
+	    e.printStackTrace();//Game isn't correct 
 	}
 	mCurrentGame.setOnNextGameListener(new OnNextGameListener() {
 	    
@@ -66,8 +69,10 @@ public class GameCycle {
 		start();
 	    }
 	});
+	//add MiniGame to Screen
 	mRootLayout.removeAllViews();
 	mRootLayout.addView(mCurrentGame);
+	//starts the MiniGame
 	mCurrentGame.start();
     }
     
