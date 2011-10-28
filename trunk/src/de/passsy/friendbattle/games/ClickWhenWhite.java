@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import de.passsy.friendbattle.Player;
 import de.passsy.friendbattle.utility.Tools;
 
@@ -57,7 +58,7 @@ public class ClickWhenWhite extends MiniGame{
 
     @Override
     protected void showIntroductions(int seconds) {
-	
+	Log.v("tag", "introduction");
     }
 
 }
