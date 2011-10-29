@@ -33,7 +33,7 @@ public class WinnerScreen extends RelativeLayout {
     }
     
     private void init(Context context) {
-	LayoutInflater.from(context).inflate(R.layout.screen_winner, this, true);
+	LayoutInflater.from(context).inflate(R.layout.screen_winner2, this, true);
 	findViews();
     }
 

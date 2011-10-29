@@ -43,12 +43,7 @@ public class GameMenu extends Activity {
 	setContentView(R.layout.gamemenu);
 	
 	findViews();
-	
-	
-	
 	loadPreferences();
-	
-
     }
 
     private void findViews() {

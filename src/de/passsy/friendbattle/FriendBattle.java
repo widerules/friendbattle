@@ -8,6 +8,7 @@ import de.passsy.friendbattle.Buzzer.OnBuzzListener;
 import de.passsy.friendbattle.GameCycle.OnEndListener;
 import de.passsy.friendbattle.games.ClickWhenWhite;
 import de.passsy.friendbattle.games.MiniGame;
+import de.passsy.friendbattle.games.MiniGame.Correctness;
 import de.passsy.friendbattle.games.MiniGame.OnNextGameListener;
 import de.passsy.friendbattle.utility.Tools;
 
@@ -38,6 +39,9 @@ public class FriendBattle extends Activity {
 
     private int mRounds;
 
+    private TextViewFlipped mBot_txt;
+    private TextViewFlipped mTop_txt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -63,10 +67,33 @@ public class FriendBattle extends Activity {
 
 		@Override
 		public void onBuzz(Buzzer btn) {
-		    mGameCycle.getCurrentGame().onGuess(btn.getPlayer());
-
+		    MiniGame.Correctness correctness = mGameCycle
+			    .getCurrentGame().onGuess(btn.getPlayer());
+		    dealPoints(correctness, btn.getPlayer());
 		}
 	    });
+	}
+
+    }
+
+    protected void dealPoints(Correctness correctness, Player player) {
+	switch (correctness) {
+	case correct:
+
+	    player.getBuzzer().setCorrectBuzz(true);
+	    player.setPoints(player.getPoints() + 1);
+	    break;
+
+	case incorrect:
+	    player.setPoints(player.getPoints() - 1);
+	    break;
+
+	case toolate:
+
+	    player.getBuzzer().setTooLateBuzz(true);
+	    break;
+	default:
+	    break;
 	}
 
     }
@@ -80,7 +107,10 @@ public class FriendBattle extends Activity {
 	    mBuzzer.add(buzzer);
 	}
 	mGameModule = (FrameLayout) findViewById(R.id.gamemodule);
-	
+
+	mTop_txt = (TextViewFlipped) findViewById(R.id.top_txt);
+	mTop_txt = (TextViewFlipped) findViewById(R.id.bot_txt);
+
     }
 
     private void readIntent() {
@@ -111,7 +141,7 @@ public class FriendBattle extends Activity {
     private void loadGames() {
 	mGameCycle = new GameCycle(mGameModule, mRounds);
 	mGameCycle.setonEndListener(new OnEndListener() {
-	    
+
 	    @Override
 	    public void onEnd(GameCycle cycle) {
 		showResults();
@@ -121,14 +151,14 @@ public class FriendBattle extends Activity {
 
     protected void showResults() {
 	mGameModule.addView(mWinnerScreen);
-	mWinnerScreen.setWinner(getWinner());	
+	mWinnerScreen.setWinner(getWinner());
     }
 
     private int getWinner() {
 	Player winner = new Player(-1);
 	for (Player player : mPlayers) {
-	    
-	    if (player.getPoints() > winner.getPoints()){
+
+	    if (player.getPoints() > winner.getPoints()) {
 		winner = player;
 	    }
 	}

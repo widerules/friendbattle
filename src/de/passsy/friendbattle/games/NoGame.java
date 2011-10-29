@@ -10,8 +10,8 @@ public class NoGame extends MiniGame {
     }
     
     @Override
-    public void onGuess(Player player) {
-	player.getBuzzer().setTooLateBuzz(true);
+    public Correctness onGuess(Player player) {
+	return Correctness.toolate;
     }
 
 }

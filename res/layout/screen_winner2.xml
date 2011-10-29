@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:friendbattle="http://schemas.android.com/apk/res/de.passsy.friendbattle"
+	android:layout_width="match_parent">
+
+	<RelativeLayout
+	    android:id="@+id/relativeLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
+
+		<de.passsy.friendbattle.TextViewFlipped
+		    android:id="@+id/textViewFlippedTop"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:layout_centerHorizontal="true"
+		    android:text="TextViewFlipped" />
+
+		<de.passsy.friendbattle.TextViewFlipped
+		    android:id="@+id/textViewFlippedBot"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
+		    android:layout_centerHorizontal="true"
+		    android:text="TextViewFlipped" 
+		    friendbattle:flipped="true"/>
+
+	</RelativeLayout>
+	
+</merge>
+
