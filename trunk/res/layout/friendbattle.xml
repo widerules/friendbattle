@@ -1,65 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:friendbattle="http://schemas.android.com/apk/res/de.passsy.friendbattle"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<LinearLayout
-        android:layout_height="100dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:friendbattle="http://schemas.android.com/apk/res/de.passsy.friendbattle"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
         android:id="@+id/topbuzzer"
-        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
-        android:layout_width="match_parent">
+        android:layout_alignParentTop="true" >
+
         <de.passsy.friendbattle.Buzzer
             android:id="@+id/buzzer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            friendbattle:flipped="true"></de.passsy.friendbattle.Buzzer>
+            friendbattle:flipped="true" >
+        </de.passsy.friendbattle.Buzzer>
+
         <de.passsy.friendbattle.Buzzer
             android:id="@+id/buzzer3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            friendbattle:flipped="true"></de.passsy.friendbattle.Buzzer>
+            friendbattle:flipped="true" >
+        </de.passsy.friendbattle.Buzzer>
+
         <de.passsy.friendbattle.Buzzer
             android:id="@+id/buzzer5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            friendbattle:flipped="true"></de.passsy.friendbattle.Buzzer>
+            friendbattle:flipped="true" >
+        </de.passsy.friendbattle.Buzzer>
     </LinearLayout>
-	<LinearLayout
-		android:layout_width="wrap_content"
-		android:id="@+id/botbuzzer"
-		android:layout_height="100dp"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentLeft="true">
-		<de.passsy.friendbattle.Buzzer
-			android:id="@+id/buzzer0"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"></de.passsy.friendbattle.Buzzer>
-		<de.passsy.friendbattle.Buzzer
-			android:id="@+id/buzzer2"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"></de.passsy.friendbattle.Buzzer>
-		<de.passsy.friendbattle.Buzzer
-			android:id="@+id/buzzer4"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"></de.passsy.friendbattle.Buzzer>
-	</LinearLayout>
 
-	<FrameLayout
-	    android:id="@+id/gamemodule"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_alignParentLeft="true"
-	    android:layout_below="@+id/topbuzzer"
-	    android:layout_above="@+id/botbuzzer" >
-	</FrameLayout>
-	
+    <de.passsy.friendbattle.TextViewFlipped
+        android:id="@+id/top_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/topbuzzer"
+        friendbattle:flipped="true"
+        android:text="TextViewFlipped" />
+
+    <FrameLayout
+        android:id="@+id/gamemodule"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/bot_txt"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/top_txt" >
+    </FrameLayout>
+
+    <de.passsy.friendbattle.TextViewFlipped
+        android:id="@+id/bot_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/botbuzzer"
+        android:text="TextViewFlipped" />
+
+    <LinearLayout
+        android:id="@+id/botbuzzer"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" >
+
+        <de.passsy.friendbattle.Buzzer
+            android:id="@+id/buzzer0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </de.passsy.friendbattle.Buzzer>
+
+        <de.passsy.friendbattle.Buzzer
+            android:id="@+id/buzzer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </de.passsy.friendbattle.Buzzer>
+
+        <de.passsy.friendbattle.Buzzer
+            android:id="@+id/buzzer4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </de.passsy.friendbattle.Buzzer>
+    </LinearLayout>
+
 </RelativeLayout>
