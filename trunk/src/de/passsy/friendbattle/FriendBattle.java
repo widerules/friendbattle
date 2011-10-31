@@ -6,6 +6,7 @@ import java.util.List;
 
 import de.passsy.friendbattle.Buzzer.OnBuzzListener;
 import de.passsy.friendbattle.GameCycle.OnEndListener;
+import de.passsy.friendbattle.WinnerScreen.OnRestartListener;
 import de.passsy.friendbattle.games.ClickWhenWhite;
 import de.passsy.friendbattle.games.MiniGame;
 import de.passsy.friendbattle.games.MiniGame.Correctness;
@@ -60,10 +61,18 @@ public class FriendBattle extends Activity {
 	loadGames();
 	mGameCycle.start();
     }
+    
+    public void restart(){
+	loadGames();
+	for(Player player:mPlayers){
+	    player.setPoints(0);
+	}
+	mGameCycle.start();
+    }
 
     private void createListeners() {
 	for (Buzzer buzzer : mBuzzer) {
-	    buzzer.setonBuzzListener(new OnBuzzListener() {
+	    buzzer.setOnBuzzListener(new OnBuzzListener() {
 
 		@Override
 		public void onBuzz(Buzzer btn) {
@@ -93,6 +102,7 @@ public class FriendBattle extends Activity {
 	    player.getBuzzer().setTooLateBuzz(true);
 	    break;
 	default:
+	    player.getBuzzer().setTooLateBuzz(true);
 	    break;
 	}
 
@@ -109,8 +119,16 @@ public class FriendBattle extends Activity {
 	mGameModule = (FrameLayout) findViewById(R.id.gamemodule);
 
 	mTop_txt = (TextViewFlipped) findViewById(R.id.top_txt);
-	mTop_txt = (TextViewFlipped) findViewById(R.id.bot_txt);
+	mBot_txt = (TextViewFlipped) findViewById(R.id.bot_txt);
 
+	mWinnerScreen.setOnRestartListener(new OnRestartListener() {
+	    
+	    @Override
+	    public void onRestart() {
+		restart();
+		
+	    }
+	});
     }
 
     private void readIntent() {
@@ -151,7 +169,13 @@ public class FriendBattle extends Activity {
 
     protected void showResults() {
 	mGameModule.addView(mWinnerScreen);
-	mWinnerScreen.setWinner(getWinner());
+	//mWinnerScreen.setWinner(getWinner());
+	setText("Player" + getWinner() + " won the Game");
+    }
+    
+    private void setText(CharSequence text){
+	mTop_txt.setText(text);
+	mBot_txt.setText(text);
     }
 
     private int getWinner() {

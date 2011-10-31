@@ -30,6 +30,10 @@ containing a value of this type.
         public static final int icon=0x7f020008;
     }
     public static final class id {
+        public static final int LayoutBot=0x7f050014;
+        public static final int LayoutTop=0x7f050017;
+        public static final int back_bot=0x7f050015;
+        public static final int back_top=0x7f050019;
         public static final int background=0x7f050000;
         public static final int bot_txt=0x7f050008;
         public static final int botbuzzer=0x7f050009;
@@ -45,6 +49,8 @@ containing a value of this type.
         public static final int players_txt=0x7f05000f;
         public static final int points_txt=0x7f050001;
         public static final int relativeLayout1=0x7f050010;
+        public static final int restart_bot=0x7f050016;
+        public static final int restart_top=0x7f050018;
         public static final int startgame=0x7f05000e;
         public static final int textViewFlippedBot=0x7f050013;
         public static final int textViewFlippedTop=0x7f050012;

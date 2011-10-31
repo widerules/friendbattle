@@ -3,34 +3,19 @@ package de.passsy.friendbattle;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.graphics.Shader.TileMode;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.widget.Button;
 
-public class TextViewFlipped extends TextView {
-    
-    private Boolean mFlipped = false;
+public class ButtonFlipped extends Button {
 
-    public TextViewFlipped(final Context context, final AttributeSet attrs, final int defStyle) {
+    private boolean mFlipped = false;
 
-        super(context, attrs, defStyle);
-        analyseAttributes(context, attrs);
+
+    public ButtonFlipped(Context context, AttributeSet attrs) {
+	super(context, attrs);
+	analyseAttributes(context, attrs);
+	
     }
-
-    public TextViewFlipped(final Context context, final AttributeSet attrs) {
-
-        super(context, attrs);
-        analyseAttributes(context, attrs);
-    }
-
-    public TextViewFlipped(final Context context) {
-
-        super(context);
-    }
-
-    
     private void analyseAttributes(Context context, AttributeSet attrs) {
 	if (attrs != null) {
 
@@ -44,11 +29,11 @@ public class TextViewFlipped extends TextView {
 	}
 	
     }
-    
+
     @Override
     protected void onDraw(final Canvas canvas) {
 
-	if(mFlipped){
+	if(mFlipped ){
     	    canvas.save();
     	    float py = this.getHeight()/2.0f;
     	    float px = this.getWidth()/2.0f;

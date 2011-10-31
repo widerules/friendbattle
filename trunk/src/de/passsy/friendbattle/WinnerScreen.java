@@ -2,16 +2,30 @@ package de.passsy.friendbattle;
 
 import de.passsy.friendbattle.utility.Tools;
 import android.content.Context;
+import android.text.method.MovementMethod;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 public class WinnerScreen extends RelativeLayout {
     
-    private int mWinner;
-    private TextViewFlipped mTop_txt;
-    private TextViewFlipped mBot_txt;
+    public interface OnRestartListener{
+	public abstract void onRestart();
+    }
     
+    private Button mBackTop_btn;
+    private Button mBackBot_btn;
+    private Button mRestartTop_btn;
+    private Button mRestartBot_btn;
+    
+    private OnRestartListener mRestartListener;
+    
+    public void setOnRestartListener(OnRestartListener restartListener) {
+        this.mRestartListener = restartListener;
+    }
+
     public WinnerScreen(){
 	super(Tools.getContext());	
 	init(Tools.getContext());
@@ -38,20 +52,50 @@ public class WinnerScreen extends RelativeLayout {
     }
 
     private void findViews() {
-	mTop_txt = (TextViewFlipped) findViewById(R.id.textViewFlippedTop);
-	mBot_txt = (TextViewFlipped) findViewById(R.id.textViewFlippedBot);
-	
+	mBackBot_btn = (Button) findViewById(R.id.back_bot);
+	mBackBot_btn.setOnClickListener(new OnClickListener() {
+	    
+	    @Override
+	    public void onClick(View v) {
+		back();
+		
+	    }
+	});
+	mBackTop_btn = (Button) findViewById(R.id.back_top);
+	mBackTop_btn.setOnClickListener(new OnClickListener() {
+	    
+	    @Override
+	    public void onClick(View v) {
+		back();
+		
+	    }
+	});
+	mRestartBot_btn = (Button) findViewById(R.id.restart_bot);
+	mRestartBot_btn.setOnClickListener(new OnClickListener() {
+	    
+	    @Override
+	    public void onClick(View v) {
+		restart();
+		
+	    }
+	});
+	mRestartTop_btn = (Button) findViewById(R.id.restart_top);
+	mRestartTop_btn.setOnClickListener(new OnClickListener() {
+	    
+	    @Override
+	    public void onClick(View v) {
+		restart();
+		
+	    }
+	});
     }
-    
-    private void setText(CharSequence text){
-	mTop_txt.setText(text);
-	mBot_txt.setText(text);
+
+    protected void restart() {
+	mRestartListener.onRestart();
     }
-    
-    public void setWinner(int playerNumber){
-	setText("Player" + playerNumber + " won the Game");
+
+    protected void back() {
+	Tools.getCurrentActivity().onBackPressed();
     }
-    
-    
 
 }

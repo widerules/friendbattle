@@ -9,22 +9,51 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent" >
 
-		<de.passsy.friendbattle.TextViewFlipped
-		    android:id="@+id/textViewFlippedTop"
+		<LinearLayout
+		    android:id="@+id/LayoutBot"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_alignParentBottom="true"
 		    android:layout_centerHorizontal="true"
-		    android:text="TextViewFlipped" />
+		    android:layout_marginBottom="10dp" >
 
-		<de.passsy.friendbattle.TextViewFlipped
-		    android:id="@+id/textViewFlippedBot"
+            <Button
+                android:id="@+id/back_bot"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Back" />
+
+            <Button
+                android:id="@+id/restart_bot"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Restart" />
+
+        </LinearLayout>
+
+		<LinearLayout
+		    android:id="@+id/LayoutTop"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_alignParentTop="true"
 		    android:layout_centerHorizontal="true"
-		    android:text="TextViewFlipped" 
-		    friendbattle:flipped="true"/>
+		    android:layout_marginTop="10dp" >
+
+			<de.passsy.friendbattle.ButtonFlipped
+			    android:id="@+id/restart_top"
+			    android:layout_width="70dp"
+			    android:layout_height="wrap_content"
+			    android:text="Restart"
+			    friendbattle:flipped="true"/>
+
+			<de.passsy.friendbattle.ButtonFlipped
+			    android:id="@+id/back_top"
+			    android:layout_width="70dp"
+			    android:layout_height="wrap_content"
+			    android:text="Back" 
+			    friendbattle:flipped="true"/>
+
+		</LinearLayout>
 
 	</RelativeLayout>
 	

@@ -103,7 +103,7 @@ public class Buzzer extends RelativeLayout {
 	}
     }
 
-    public void setonBuzzListener(final OnBuzzListener l) {
+    public void setOnBuzzListener(final OnBuzzListener l) {
 	mBuzzListener = l;
     }
 
