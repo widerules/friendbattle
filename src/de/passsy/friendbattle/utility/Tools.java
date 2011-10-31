@@ -17,7 +17,9 @@ public class Tools {
      */
     static public void StartActivity(Class<?> activityClassName,Bundle extras){
 	Intent intent = new Intent(mCurrentActivity, activityClassName);
-	intent.putExtras(extras);
+	if (extras != null){
+	    intent.putExtras(extras);
+	}
         mCurrentActivity.startActivity(intent);
     }
     
