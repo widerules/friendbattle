@@ -32,14 +32,13 @@ public class Screen_TextViewsCenter extends RelativeLayout {
     }
     
     private void init(Context context) {
-	LayoutInflater.from(context).inflate(R.layout.screen_winner2, this, true);
+	LayoutInflater.from(context).inflate(R.layout.textview_center, this, true);
 	findViews();
     }
 
     private void findViews() {
 	mTop_txt = (TextViewFlipped) findViewById(R.id.textViewFlippedTop);
 	mBot_txt = (TextViewFlipped) findViewById(R.id.textViewFlippedBot);
-	
     }
     
     public void setText(CharSequence text){
