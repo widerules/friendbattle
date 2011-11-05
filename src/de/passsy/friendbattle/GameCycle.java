@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 
 import de.passsy.friendbattle.games.ClickWhenColor;
 import de.passsy.friendbattle.games.ClickWhenWhite;
+import de.passsy.friendbattle.games.GuessWhen;
 import de.passsy.friendbattle.games.MiniGame;
 import de.passsy.friendbattle.games.MiniGame.OnNextGameListener;
 import de.passsy.friendbattle.games.NoGame;
@@ -17,6 +18,10 @@ public class GameCycle {
     
     public interface OnEndListener {
 	public abstract void onEnd(GameCycle cycle);
+    }
+    
+    public interface OnNewGameListener {
+	public abstract void onNewGame(CharSequence name,CharSequence description);
     }
     
     private List<MiniGame> mMiniGames = new ArrayList<MiniGame>();
@@ -41,6 +46,8 @@ public class GameCycle {
     private FrameLayout mRootLayout;
 
     private OnEndListener mEndListener;
+    
+    private OnNewGameListener mNewGameListener;
     
     public GameCycle(FrameLayout rootLayout,int rounds){
 	mRootLayout = rootLayout;
@@ -73,6 +80,9 @@ public class GameCycle {
 	mRootLayout.removeAllViews();
 	mRootLayout.addView(mCurrentGame);
 	//starts the MiniGame
+	CharSequence name = mCurrentGame.getClass().getName();
+	CharSequence description = mCurrentGame.getDescription();
+	mNewGameListener.onNewGame(name, description);
 	mCurrentGame.start();
     }
     
@@ -105,6 +115,10 @@ public class GameCycle {
 	mEndListener = l;
     }
     
+    public void setOnNewGameListener(final OnNewGameListener l){
+	mNewGameListener = l;
+    }
+    
     private void end() {
 	mRootLayout.removeAllViews();
 	mEndListener.onEnd(this);
@@ -112,6 +126,7 @@ public class GameCycle {
     }
 
     private void loadGames(){
+	mMiniGames.add(new GuessWhen());
 	mMiniGames.add(new ClickWhenWhite());
 	mMiniGames.add(new ClickWhenColor());
     }

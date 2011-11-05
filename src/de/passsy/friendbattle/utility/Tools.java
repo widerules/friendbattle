@@ -37,9 +37,9 @@ public class Tools {
 	mContext = context;
     }
     
-    public static void toast(final String s) {
+    public static void toast(final CharSequence name) {
 
-        final Toast toast = Toast.makeText(mContext, s, android.widget.Toast.LENGTH_SHORT);
+        final Toast toast = Toast.makeText(mContext, name, android.widget.Toast.LENGTH_SHORT);
         toast.show();
     }
 

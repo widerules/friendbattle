@@ -33,23 +33,6 @@ public class ClickWhenWhite extends MiniGame{
     public ClickWhenWhite(Context context, AttributeSet attrs) {
 	super(context, attrs);
     }
-
-    @Override
-    public void start() {
-	super.start();
-	
-	int time =  (int) Math.round((Math.random()*4000))+2000;
-	
-            timer.schedule(new TimerTask() {
-        	    
-                @Override
-                public void run() {
-                    mHandler.post(mFireTimer);
-                }
-            }, time);
-	
-	
-    }
     
     private void Action() {
 	setBackgroundColor(Color.WHITE);
@@ -59,6 +42,25 @@ public class ClickWhenWhite extends MiniGame{
     @Override
     protected void showIntroductions(int seconds) {
 	Log.v("tag", "introduction");
+    }
+
+    @Override
+    public void startGame() {
+	int time =  (int) Math.round((Math.random()*4000))+2000;
+	
+        timer.schedule(new TimerTask() {
+    	    
+            @Override
+            public void run() {
+                mHandler.post(mFireTimer);
+            }
+        }, time);
+	
+    }
+
+    @Override
+    public CharSequence getDescription() {
+	return "Click if the color is white";
     }
 
 }

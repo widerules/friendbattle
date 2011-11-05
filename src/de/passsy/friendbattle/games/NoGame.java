@@ -14,4 +14,14 @@ public class NoGame extends MiniGame {
 	return Correctness.toolate;
     }
 
+    @Override
+    public void startGame() {
+	//do nothing
+    }
+
+    @Override
+    public CharSequence getDescription() {
+	return "";
+    }
+
 }

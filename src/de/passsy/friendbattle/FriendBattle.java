@@ -6,7 +6,6 @@ import java.util.List;
 
 import de.passsy.friendbattle.Buzzer.OnBuzzListener;
 import de.passsy.friendbattle.GameCycle.OnEndListener;
-import de.passsy.friendbattle.WinnerScreen.OnRestartListener;
 import de.passsy.friendbattle.games.ClickWhenWhite;
 import de.passsy.friendbattle.games.MiniGame;
 import de.passsy.friendbattle.games.MiniGame.Correctness;
@@ -34,7 +33,7 @@ public class FriendBattle extends Activity {
     private FrameLayout mGameModule;
     private MiniGame mCurrentGame;
 
-    private WinnerScreen mWinnerScreen = new WinnerScreen();
+    private Screen_Winner mWinnerScreen = new Screen_Winner();
 
     private GameCycle mGameCycle;
 
@@ -94,6 +93,7 @@ public class FriendBattle extends Activity {
 	    break;
 
 	case incorrect:
+	    player.getBuzzer().setCorrectBuzz(false);
 	    player.setPoints(player.getPoints() - 1);
 	    break;
 
@@ -165,6 +165,14 @@ public class FriendBattle extends Activity {
 		showResults();
 	    }
 	});
+	mGameCycle.setOnNewGameListener(new OnNewGameListener() {
+	    
+	    @Override
+	    public void onNewGame(CharSequence name, CharSequence description) {
+		setDescription(description);
+		Tools.toast(name);
+	    }
+	});
     }
 
     protected void showResults() {
@@ -187,5 +195,14 @@ public class FriendBattle extends Activity {
 	    }
 	}
 	return winner.getId();
+    }
+    
+    /**
+     * sets the description of the current game
+     * @param text
+     */
+    public void setDescription(CharSequence text){
+	mBot_txt.setText(text);
+	mTop_txt.setText(text);
     }
 }
