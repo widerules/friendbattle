@@ -40,7 +40,7 @@ public abstract class MiniGame extends RelativeLayout {
     public enum Correctness {
 	correct, incorrect, toolate;
     }
-
+    
     /**
      * How long the Introductions are shown
      */
@@ -213,8 +213,15 @@ public abstract class MiniGame extends RelativeLayout {
      */
     public void start() {
 	showIntroductions(HOWTO_TIME);
+	
+	startGame();
     };
-
+    
+    /**
+     * starts the Game
+     */
+    abstract public void startGame();
+    
     /**
      * shows the introduction at the beginning of every Game
      * 
@@ -231,5 +238,7 @@ public abstract class MiniGame extends RelativeLayout {
     public void setOnNextGameListener(final OnNextGameListener l) {
 	NextGameListener = l;
     }
+    
+    abstract public CharSequence getDescription();
 
 }
