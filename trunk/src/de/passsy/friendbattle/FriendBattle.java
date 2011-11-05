@@ -6,6 +6,8 @@ import java.util.List;
 
 import de.passsy.friendbattle.Buzzer.OnBuzzListener;
 import de.passsy.friendbattle.GameCycle.OnEndListener;
+import de.passsy.friendbattle.GameCycle.OnNewGameListener;
+import de.passsy.friendbattle.Screen_Winner.OnRestartListener;
 import de.passsy.friendbattle.games.ClickWhenWhite;
 import de.passsy.friendbattle.games.MiniGame;
 import de.passsy.friendbattle.games.MiniGame.Correctness;
