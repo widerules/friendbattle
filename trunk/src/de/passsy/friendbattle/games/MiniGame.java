@@ -75,7 +75,7 @@ public abstract class MiniGame extends RelativeLayout {
     /**
      * This Runnable is Called from the mNewGameTimer
      */
-    final Runnable mFireTimer = new Runnable() {
+    final Runnable mNextGameTimer = new Runnable() {
 	public void run() {
 	    if (NextGameListener != null) {
 		NextGameListener.onNextGame(MiniGame.this);
@@ -192,7 +192,7 @@ public abstract class MiniGame extends RelativeLayout {
 
 		@Override
 		public void run() {
-		    mHandler.post(mFireTimer);
+		    mHandler.post(mNextGameTimer);
 		}
 	    }, 1000);
 

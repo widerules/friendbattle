@@ -127,9 +127,10 @@ public class GameCycle {
 
     private void loadGames(){
 	
+	mMiniGames.add(new GuessWhen());
 	mMiniGames.add(new ClickWhenWhite());
 	mMiniGames.add(new ClickWhenColor());
-	mMiniGames.add(new GuessWhen());
+	
     }
     
 
