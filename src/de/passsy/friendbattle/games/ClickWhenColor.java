@@ -60,7 +60,7 @@ public class ClickWhenColor extends MiniGame{
 
     @Override
     public CharSequence getDescription() {
-	return "Click if the color is white";
+	return "Click if the color is other then white";
     }
 
 }
