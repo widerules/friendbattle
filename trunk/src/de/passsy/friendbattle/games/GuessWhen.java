@@ -47,36 +47,7 @@ public class GuessWhen extends MiniGame {
 	}
     };
 
-    /**
-     * Constructor
-     */
-    public GuessWhen() {
 
-    Timer mTimer = new Timer();
-
-    private Handler mHandler = new Handler();
-
-    private Runnable UpdateScreen = new Runnable() {
-	int i = 0;
-	int time = (int) Math.round((Math.random() * 6)) + 5;
-	int max = time;
-
-	@Override
-	public void run() {
-	    time--;
-
-	    if (time > (int)(max / 2)) {
-		mTextViews.setText("" + time);
-	    } else {
-		mTextViews.setText("?");
-	    }
-	    if (time == 0) {
-		setCorrectness(true);
-		stopTimer();
-	    }
-
-	}
-    };
 
     public GuessWhen() {
 	this.addView(mTextViews);
@@ -89,35 +60,6 @@ public class GuessWhen extends MiniGame {
 
     }
 
-    @Override
-    public void startGame() {
-	int time = (int) Math.round((Math.random() * 1000)) + 500;
-
-	startTimer(0, time, true, UpdateScreen);
-    }
-
-    private void startTimer(int delay, int time, boolean repeat,
-	    final Runnable task) {
-	// stops timer if running
-	// mTimer.cancel();
-
-	// starts the timer
-	
-	TimerTask timerTask = new TimerTask() {
-
-		@Override
-		public void run() {
-		    mHandler.post(task);
-
-		}
-	};
-	if (repeat) {
-	    mTimer.schedule(timerTask, time + delay, time);
-	} else {
-	    mTimer.schedule(timerTask, time + delay);
-	}
-
-    }
 
     private void stopTimer() {
 	mTimer.purge();
@@ -125,8 +67,6 @@ public class GuessWhen extends MiniGame {
 	
 
     }
-
-    @Override
 
     @Override
     public void startGame() {
@@ -160,11 +100,6 @@ public class GuessWhen extends MiniGame {
 		}
 	    }, time + delay);
 	}
-
-    }
-
-    private void stopTimer() {
-	mTimer.cancel();
 
     }
 
