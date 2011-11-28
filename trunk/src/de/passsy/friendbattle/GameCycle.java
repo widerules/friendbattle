@@ -131,6 +131,9 @@ public class GameCycle {
 	mMiniGames.add(new ClickWhenWhite());
 	mMiniGames.add(new ClickWhenColor());
 	
+	//mMiniGames.add(new ClickWhenWhite());
+	//mMiniGames.add(new ClickWhenColor());
+	
     }
     
 

@@ -3,6 +3,7 @@ package de.passsy.friendbattle;
 import de.passsy.friendbattle.utility.Tools;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
@@ -44,6 +45,15 @@ public class Screen_TextViewsCenter extends RelativeLayout {
     public void setText(CharSequence text){
 	mTop_txt.setText(text);
 	mBot_txt.setText(text);
+    }
+    
+    /**
+     * sets the Size of the TextViews
+     * @param pt size in pt
+     */
+    public void setTextSize(int pt){
+	mTop_txt.setTextSize(TypedValue.COMPLEX_UNIT_PT, pt);
+	mBot_txt.setTextSize(TypedValue.COMPLEX_UNIT_PT, pt);
     }
     
 }
