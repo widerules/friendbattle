@@ -172,7 +172,7 @@ public class FriendBattle extends Activity {
 	    @Override
 	    public void onNewGame(CharSequence name, CharSequence description) {
 		setDescription(description);
-		Tools.toast(name);
+		//Tools.toast(name);
 	    }
 	});
     }
