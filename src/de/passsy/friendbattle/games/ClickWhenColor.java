@@ -7,7 +7,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.AttributeSet;
-import de.passsy.friendbattle.Player;
+import de.passsy.friendbattle.data.Player;
 import de.passsy.friendbattle.utility.Tools;
 
 public class ClickWhenColor extends MiniGame{

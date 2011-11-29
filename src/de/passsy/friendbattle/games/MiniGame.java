@@ -9,7 +9,7 @@ import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
-import de.passsy.friendbattle.Player;
+import de.passsy.friendbattle.data.Player;
 import de.passsy.friendbattle.utility.Tools;
 
 /**

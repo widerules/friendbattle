@@ -39,14 +39,14 @@
 		    android:layout_centerHorizontal="true"
 		    android:layout_marginTop="10dp" >
 
-			<de.passsy.friendbattle.ButtonFlipped
+			<de.passsy.friendbattle.controls.ButtonFlipped
 			    android:id="@+id/restart_top"
 			    android:layout_width="70dp"
 			    android:layout_height="wrap_content"
 			    android:text="Restart"
 			    friendbattle:flipped="true"/>
 
-			<de.passsy.friendbattle.ButtonFlipped
+			<de.passsy.friendbattle.controls.ButtonFlipped
 			    android:id="@+id/back_top"
 			    android:layout_width="70dp"
 			    android:layout_height="wrap_content"

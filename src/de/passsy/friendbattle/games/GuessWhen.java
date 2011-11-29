@@ -6,7 +6,7 @@ import java.util.TimerTask;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import de.passsy.friendbattle.R;
-import de.passsy.friendbattle.Screen_TextViewsCenter;
+import de.passsy.friendbattle.screenlayouts.Screen_TextViewsCenter;
 import de.passsy.friendbattle.utility.Tools;
 
 public class GuessWhen extends MiniGame {

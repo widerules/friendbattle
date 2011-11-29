@@ -1,5 +1,7 @@
-package de.passsy.friendbattle;
+package de.passsy.friendbattle.controls;
 
+import de.passsy.friendbattle.R;
+import de.passsy.friendbattle.R.styleable;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;

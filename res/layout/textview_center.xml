@@ -17,14 +17,14 @@
 		    android:layout_centerVertical="true"
 		    android:orientation="vertical" >
 
-			<de.passsy.friendbattle.TextViewFlipped
+			<de.passsy.friendbattle.controls.TextViewFlipped
 			    android:id="@+id/textViewFlippedTop"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:text="TextViewFlipped"
 			    friendbattle:flipped="true"/>
 
-			<de.passsy.friendbattle.TextViewFlipped
+			<de.passsy.friendbattle.controls.TextViewFlipped
 			    android:id="@+id/textViewFlippedBot"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"

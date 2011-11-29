@@ -1,4 +1,4 @@
-package de.passsy.friendbattle;
+package de.passsy.friendbattle.controllers;
 
 import java.util.ArrayList;
 import java.util.List;

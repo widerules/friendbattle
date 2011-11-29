@@ -11,7 +11,7 @@
 	    android:layout_alignParentTop="true"
 	    android:scaleType="fitXY"
 	    android:src="@drawable/buzzerupdown"/>
-	<de.passsy.friendbattle.TextViewFlipped
+	<de.passsy.friendbattle.controls.TextViewFlipped
         android:id="@+id/points_txt"
         android:layout_height="wrap_content"
         android:text="Button"
