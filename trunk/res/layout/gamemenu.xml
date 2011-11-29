@@ -11,29 +11,29 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" >
 
-        <de.passsy.friendbattle.Buzzer
+        <de.passsy.friendbattle.controls.Buzzer
             android:id="@+id/buzzer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             friendbattle:flipped="true" >
-        </de.passsy.friendbattle.Buzzer>
+        </de.passsy.friendbattle.controls.Buzzer>
 
-        <de.passsy.friendbattle.Buzzer
+        <de.passsy.friendbattle.controls.Buzzer
             android:id="@+id/buzzer3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             friendbattle:flipped="true" >
-        </de.passsy.friendbattle.Buzzer>
+        </de.passsy.friendbattle.controls.Buzzer>
 
-        <de.passsy.friendbattle.Buzzer
+        <de.passsy.friendbattle.controls.Buzzer
             android:id="@+id/buzzer5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             friendbattle:flipped="true" >
-        </de.passsy.friendbattle.Buzzer>
+        </de.passsy.friendbattle.controls.Buzzer>
     </LinearLayout>
     <SeekBar
         android:id="@+id/playerSeek"
@@ -61,26 +61,26 @@
         android:layout_height="100dp"
         android:layout_alignParentBottom="true" >
 
-        <de.passsy.friendbattle.Buzzer
+        <de.passsy.friendbattle.controls.Buzzer
             android:id="@+id/buzzer0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
-        </de.passsy.friendbattle.Buzzer>
+        </de.passsy.friendbattle.controls.Buzzer>
 
-        <de.passsy.friendbattle.Buzzer
+        <de.passsy.friendbattle.controls.Buzzer
             android:id="@+id/buzzer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
-        </de.passsy.friendbattle.Buzzer>
+        </de.passsy.friendbattle.controls.Buzzer>
 
-        <de.passsy.friendbattle.Buzzer
+        <de.passsy.friendbattle.controls.Buzzer
             android:id="@+id/buzzer4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
-        </de.passsy.friendbattle.Buzzer>
+        </de.passsy.friendbattle.controls.Buzzer>
     </LinearLayout>
 
     <TextView

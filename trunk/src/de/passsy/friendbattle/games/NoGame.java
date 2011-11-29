@@ -1,6 +1,6 @@
 package de.passsy.friendbattle.games;
 
-import de.passsy.friendbattle.Player;
+import de.passsy.friendbattle.data.Player;
 
 public class NoGame extends MiniGame {
 

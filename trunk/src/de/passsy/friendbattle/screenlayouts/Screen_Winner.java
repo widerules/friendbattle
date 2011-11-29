@@ -1,5 +1,8 @@
-package de.passsy.friendbattle;
+package de.passsy.friendbattle.screenlayouts;
 
+import de.passsy.friendbattle.R;
+import de.passsy.friendbattle.R.id;
+import de.passsy.friendbattle.R.layout;
 import de.passsy.friendbattle.utility.Tools;
 import android.content.Context;
 import android.util.AttributeSet;

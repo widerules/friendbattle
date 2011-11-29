@@ -1,4 +1,6 @@
-package de.passsy.friendbattle;
+package de.passsy.friendbattle.data;
+
+import de.passsy.friendbattle.controls.Buzzer;
 
 public class Player {
     private int mId;

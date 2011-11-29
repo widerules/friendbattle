@@ -1,5 +1,11 @@
-package de.passsy.friendbattle;
+package de.passsy.friendbattle.controls;
 
+import de.passsy.friendbattle.R;
+import de.passsy.friendbattle.R.drawable;
+import de.passsy.friendbattle.R.id;
+import de.passsy.friendbattle.R.layout;
+import de.passsy.friendbattle.R.styleable;
+import de.passsy.friendbattle.data.Player;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
