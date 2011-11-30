@@ -3,6 +3,7 @@ package de.passsy.friendbattle.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,6 +14,7 @@ import de.passsy.friendbattle.games.GuessWhen;
 import de.passsy.friendbattle.games.MiniGame;
 import de.passsy.friendbattle.games.MiniGame.OnNextGameListener;
 import de.passsy.friendbattle.games.NoGame;
+import de.passsy.friendbattle.screenlayouts.Screen_TextViewsCenter;
 
 public class GameCycle {
     
@@ -24,7 +26,7 @@ public class GameCycle {
 	public abstract void onNewGame(CharSequence name,CharSequence description);
     }
     
-    private List<MiniGame> mMiniGames = new ArrayList<MiniGame>();
+    private List<Class<? extends MiniGame>> mMiniGames = new ArrayList<Class<? extends MiniGame>>();
     
     private int mGameNumber = 0;
     
@@ -38,7 +40,7 @@ public class GameCycle {
 	if (mCurrentGame != null){
 	    return mCurrentGame;
 	} else {
-	    return new NoGame();
+	    return new NoGame(mContext);
 	}
         
     }
@@ -48,23 +50,26 @@ public class GameCycle {
     private OnEndListener mEndListener;
     
     private OnNewGameListener mNewGameListener;
+
+    private Context mContext;
     
-    public GameCycle(FrameLayout rootLayout,int rounds){
+    public GameCycle(Context context, FrameLayout rootLayout,int rounds){
+	mContext = context;
 	mRootLayout = rootLayout;
 	mRounds = rounds;
 	loadGames();
     }
     
     public void start() {
-	MiniGame nextGame = getNextGame();
+	Class<? extends MiniGame> nextGame = getNextGame();
 	if (nextGame == null){
 	    end();
 	    showWinner();
 	    return;
 	}
 	try {
-	    //TODO change nextGame from instance to Class
-	    mCurrentGame = nextGame.getClass().newInstance();
+	    //Creates a new Instance of the next Game an passes the Context as parameter
+	    mCurrentGame = (MiniGame) nextGame.getConstructor(Context.class).newInstance(mContext);
 	} catch (Exception e) {
 	    Log.e("FriendBattle", "ClassNotFound");
 	    e.printStackTrace();//Game isn't correct 
@@ -84,18 +89,19 @@ public class GameCycle {
 	CharSequence description = mCurrentGame.getDescription();
 	mNewGameListener.onNewGame(name, description);
 	mCurrentGame.start();
+	
     }
     
     private void showWinner() {
 	
     }
 
-    private MiniGame getNextGame(){
+    private Class<? extends MiniGame> getNextGame(){
 	if (mMiniGames.size() <= mGameNumber){
 	    end();
 	    return null;
 	} else {
-    	    MiniGame nextGame = mMiniGames.get(mGameNumber);
+    	    Class<? extends MiniGame> nextGame = mMiniGames.get(mGameNumber);
     	    mCurrentRounds++;
     	    if (mCurrentRounds >= mRounds){
     	        mGameNumber++;
@@ -127,9 +133,9 @@ public class GameCycle {
 
     private void loadGames(){
 	
-	mMiniGames.add(new GuessWhen());
-	mMiniGames.add(new ClickWhenWhite());
-	mMiniGames.add(new ClickWhenColor());
+	mMiniGames.add(GuessWhen.class);
+	mMiniGames.add(ClickWhenWhite.class);
+	mMiniGames.add(ClickWhenColor.class);
 	
 	//mMiniGames.add(new ClickWhenWhite());
 	//mMiniGames.add(new ClickWhenColor());

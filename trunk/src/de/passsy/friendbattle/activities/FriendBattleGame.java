@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.R;
 import de.passsy.friendbattle.R.id;
 import de.passsy.friendbattle.R.layout;
@@ -61,7 +62,7 @@ public class FriendBattleGame extends Activity {
 	getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	getWindow().clearFlags(
 		WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-	Tools.setCurrentActivity(this);
+	FriendBattle.setCurrentActivity(this);
 	setContentView(R.layout.friendbattle);
 	findViews();
 	readIntent();
@@ -167,7 +168,7 @@ public class FriendBattleGame extends Activity {
     }
 
     private void loadGames() {
-	mGameCycle = new GameCycle(mGameModule, mRounds);
+	mGameCycle = new GameCycle(getApplicationContext(),mGameModule, mRounds);
 	mGameCycle.setonEndListener(new OnEndListener() {
 
 	    @Override

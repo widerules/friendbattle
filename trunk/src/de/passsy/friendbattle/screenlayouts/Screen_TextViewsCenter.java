@@ -1,5 +1,6 @@
 package de.passsy.friendbattle.screenlayouts;
 
+import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.R;
 import de.passsy.friendbattle.R.id;
 import de.passsy.friendbattle.R.layout;
@@ -16,11 +17,6 @@ public class Screen_TextViewsCenter extends RelativeLayout {
     private TextViewFlipped mTop_txt;
     private TextViewFlipped mBot_txt;
     
-    public Screen_TextViewsCenter(){
-	super(Tools.getContext());	
-	init(Tools.getContext());
-    }
-
     public Screen_TextViewsCenter(Context context){
 	super(context);
 	init(context);

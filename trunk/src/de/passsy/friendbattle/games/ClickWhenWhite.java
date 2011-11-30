@@ -8,8 +8,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
-import de.passsy.friendbattle.data.Player;
-import de.passsy.friendbattle.utility.Tools;
 
 public class ClickWhenWhite extends MiniGame{
     
@@ -21,10 +19,6 @@ public class ClickWhenWhite extends MiniGame{
             Action();
         }
     };
-    
-    public ClickWhenWhite(){
-	this(Tools.getContext());
-    }
 
     public ClickWhenWhite(Context context) {
 	super(context);

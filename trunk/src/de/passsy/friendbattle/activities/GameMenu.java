@@ -3,6 +3,7 @@ package de.passsy.friendbattle.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.R;
 import de.passsy.friendbattle.R.id;
 import de.passsy.friendbattle.R.layout;
@@ -43,7 +44,7 @@ public class GameMenu extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	Tools.setCurrentActivity(this);
+	FriendBattle.setCurrentActivity(this);
 	setContentView(R.layout.gamemenu);
 	
 	findViews();
@@ -142,7 +143,7 @@ public class GameMenu extends Activity {
 	arguments.putInt("difficulty", NORMAL);
 	arguments.putInt("rounds", mRounds);
 	arguments.putStringArrayList("games", mGames);
-	Tools.StartActivity(FriendBattleGame.class, arguments);
+	FriendBattle.StartActivity(FriendBattleGame.class, arguments);
     }
 
     private void setPlayers(int players) {

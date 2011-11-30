@@ -3,15 +3,14 @@ package de.passsy.friendbattle.games;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Context;
 import android.os.Handler;
-import android.view.LayoutInflater;
-import de.passsy.friendbattle.R;
+import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.screenlayouts.Screen_TextViewsCenter;
-import de.passsy.friendbattle.utility.Tools;
 
 public class GuessWhen extends MiniGame {
 
-    private Screen_TextViewsCenter mTextViews = new Screen_TextViewsCenter();
+    private Screen_TextViewsCenter mTextViews;
 
     Timer mTimer = new Timer();
 
@@ -46,10 +45,10 @@ public class GuessWhen extends MiniGame {
 	    	    
 	}
     };
-
-
-
-    public GuessWhen() {
+    
+    public GuessWhen(Context context) {
+	super(context);
+	mTextViews = new Screen_TextViewsCenter(context);
 	this.addView(mTextViews);
 	mTextViews.setTextSize(20);
 	mTextViews.setText("?");
