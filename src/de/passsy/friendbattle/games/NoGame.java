@@ -1,8 +1,13 @@
 package de.passsy.friendbattle.games;
 
+import android.content.Context;
 import de.passsy.friendbattle.data.Player;
 
 public class NoGame extends MiniGame {
+
+    public NoGame(Context context) {
+	super(context);
+    }
 
     @Override
     protected void showIntroductions(int seconds) {

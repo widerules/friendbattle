@@ -1,5 +1,6 @@
 package de.passsy.friendbattle.screenlayouts;
 
+import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.R;
 import de.passsy.friendbattle.R.id;
 import de.passsy.friendbattle.R.layout;
@@ -29,8 +30,8 @@ public class Screen_Winner extends RelativeLayout {
     }
 
     public Screen_Winner(){
-	super(Tools.getContext());	
-	init(Tools.getContext());
+	super(FriendBattle.getCurrentActivityContext());	
+	init(FriendBattle.getCurrentActivityContext());
     }
 
     public Screen_Winner(Context context){
@@ -98,7 +99,7 @@ public class Screen_Winner extends RelativeLayout {
     }
 
     protected void back() {
-	Tools.getCurrentActivity().onBackPressed();
+	FriendBattle.getCurrentActivity().onBackPressed();
     }
 
 }
