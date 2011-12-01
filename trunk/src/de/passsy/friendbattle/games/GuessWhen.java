@@ -8,6 +8,7 @@ import android.os.Handler;
 import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.screenlayouts.Screen_TextViewsCenter;
 import de.passsy.friendbattle.utility.GoodTimer;
+import de.passsy.friendbattle.utility.GoodTimer.OnTimerListener;
 
 public class GuessWhen extends MiniGame {
 
@@ -18,37 +19,38 @@ public class GuessWhen extends MiniGame {
     private Handler mHandler = new Handler();
     
     private GoodTimer timer;
+    
+    private OnTimerListener onTimerListener = new OnTimerListener() {
+        
+	     int i = 0;
+	    	int time = (int) Math.round((Math.random() * 6)) + 5;
+	    	int max = time;
+	
+        @Override
+        public void onTimer() {
+       
+    	    time--;
 
-    private Runnable UpdateScreen = new Runnable() {
-	int i = 0;
-	int time = (int) Math.round((Math.random() * 6)) + 5;
-	int max = time;
-
-	@Override
-	public void run() {
-	    time--;
-
-	    if (time > (int)(max / 2)-1) {
-		mTextViews.setText("" + time);
-	    } else {
-		mTextViews.setText("?");
-	    }
-	    if (time == 0) {
-		setCorrectness(true);
-	    }
-	    if (time == -1) {
-		showStats();
-		//stopTimer();
-		timer.stop();
-	    }
-	    
-
-	}
-
-	private void showStats() {
-	    	    
-	}
+    	    if (time > (int)(max / 2)-1) {
+    		mTextViews.setText("" + time);
+    	    } else {
+    		mTextViews.setText("?");
+    	    }
+    	    if (time == 0) {
+    		setCorrectness(true);
+    	    }
+    	    if (time == -1) {
+    		showStats();
+    		timer.stop();
+    	    }
+    	    
+    	
+        }
     };
+    
+    private void showStats() {
+	    
+    }
     
     public GuessWhen(Context context) {
 	super(context);
@@ -64,48 +66,16 @@ public class GuessWhen extends MiniGame {
     }
 
 
-    private void stopTimer() {
-	mTimer.purge();
-	mTimer.cancel();
-	
-
-    }
+   
 
     @Override
     public void startGame() {
 	int time = (int) Math.round((Math.random() * 1000)) + 500;
 
-	//startTimer(0, time, true, UpdateScreen);
-	timer = new GoodTimer(UpdateScreen, time, 0, true);
+	timer = new GoodTimer(time, true);
+	
+	timer.setOnTimerListener(onTimerListener);
 	timer.start();
-    }
-
-    private void startTimer(int delay, int time, boolean repeat,
-	    final Runnable task) {
-	// stops timer if running
-	// mTimer.cancel();
-
-	// starts the timer
-	if (repeat) {
-	    mTimer.schedule(new TimerTask() {
-
-		@Override
-		public void run() {
-		    mHandler.post(task);
-
-		}
-	    }, time + delay, time);
-	} else {
-	    mTimer.schedule(new TimerTask() {
-
-		@Override
-		public void run() {
-		    mHandler.post(task);
-
-		}
-	    }, time + delay);
-	}
-
     }
 
     @Override

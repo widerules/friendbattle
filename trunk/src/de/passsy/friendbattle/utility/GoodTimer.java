@@ -2,12 +2,24 @@ package de.passsy.friendbattle.utility;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
 import android.os.Handler;
 
 public class GoodTimer {
 
-    private final Runnable timeoutRunnable;
+    public interface OnTimerListener {
+	public abstract void onTimer();
+    }
+
+    private OnTimerListener mTimerListener;
+
+    private final Runnable timeoutRunnable = new Runnable() {
+
+	@Override
+	public void run() {
+	    onTimer();
+
+	}
+    };
 
     private boolean mRepeat = false;
 
@@ -21,12 +33,9 @@ public class GoodTimer {
 
     private boolean mRunning;
 
-    public GoodTimer(final Runnable timeoutRunnable, final int timeout,
-	    final int delay, final boolean repeat) {
+    public GoodTimer(final int timeout, final boolean repeat) {
 
-	this.timeoutRunnable = timeoutRunnable;
 	this.mRepeat = repeat;
-	this.mDelay = delay;
 	this.mTimeout = timeout;
     }
 
@@ -51,7 +60,7 @@ public class GoodTimer {
 			mHandler.post(timeoutRunnable);
 
 		    }
-		}, mTimeout + mDelay, mTimeout);
+		}, mTimeout, mTimeout);
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
@@ -63,7 +72,7 @@ public class GoodTimer {
 		    mRunning = true;
 		    mHandler.post(timeoutRunnable);
 		}
-	    }, mTimeout + mDelay);
+	    }, mTimeout);
 	}
 
     }
@@ -81,17 +90,42 @@ public class GoodTimer {
 	mRunning = false;
     }
 
+    /**
+     * EXPERIMENTAL, NOT TESTED pause the timer.
+     */
     public void pause() {
 	if (mRunning) {
 	    try {
 		synchronized (mTimer) {
 		    mTimer.wait();
+		    mRunning = false;
 		}
 	    } catch (InterruptedException e) {
 		e.printStackTrace();
 	    }
 	}
-	mRunning = false;
+
+    }
+
+    /**
+     * EXPERIMENTAL, NOT TESTED resumes the timer
+     */
+    public void resume() {
+	if (!mRunning) {
+	    mTimer.notify();
+	    mRunning = true;
+	}
+
+    }
+
+    public void onTimer() {
+	if (mTimerListener != null) {
+	    mTimerListener.onTimer();
+	}
+    }
+
+    public void setOnTimerListener(final OnTimerListener l) {
+	mTimerListener = l;
     }
 
 }
