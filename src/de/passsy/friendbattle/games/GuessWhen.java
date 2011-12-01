@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Handler;
 import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.screenlayouts.Screen_TextViewsCenter;
+import de.passsy.friendbattle.utility.GoodTimer;
 
 public class GuessWhen extends MiniGame {
 
@@ -15,6 +16,8 @@ public class GuessWhen extends MiniGame {
     Timer mTimer = new Timer();
 
     private Handler mHandler = new Handler();
+    
+    private GoodTimer timer;
 
     private Runnable UpdateScreen = new Runnable() {
 	int i = 0;
@@ -35,7 +38,8 @@ public class GuessWhen extends MiniGame {
 	    }
 	    if (time == -1) {
 		showStats();
-		stopTimer();
+		//stopTimer();
+		timer.stop();
 	    }
 	    
 
@@ -71,7 +75,9 @@ public class GuessWhen extends MiniGame {
     public void startGame() {
 	int time = (int) Math.round((Math.random() * 1000)) + 500;
 
-	startTimer(0, time, true, UpdateScreen);
+	//startTimer(0, time, true, UpdateScreen);
+	timer = new GoodTimer(UpdateScreen, time, 0, true);
+	timer.start();
     }
 
     private void startTimer(int delay, int time, boolean repeat,
