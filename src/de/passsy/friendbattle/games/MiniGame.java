@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 import de.passsy.friendbattle.FriendBattle;
+import de.passsy.friendbattle.controllers.FirstGets;
+import de.passsy.friendbattle.controllers.PointProvider;
 import de.passsy.friendbattle.data.Player;
 import de.passsy.friendbattle.utility.Tools;
 
@@ -50,7 +52,7 @@ public abstract class MiniGame extends RelativeLayout {
     /**
      * Listener for the Event OnNextGame
      */
-    private OnNextGameListener NextGameListener;
+    private OnNextGameListener mNextGameListener;
 
     /**
      * true if the game has the state Correct false if the game isn't correct at
@@ -78,8 +80,8 @@ public abstract class MiniGame extends RelativeLayout {
      */
     final Runnable mNextGameTimer = new Runnable() {
 	public void run() {
-	    if (NextGameListener != null) {
-		NextGameListener.onNextGame(MiniGame.this);
+	    if (mNextGameListener != null) {
+		mNextGameListener.onNextGame(MiniGame.this);
 	    }
 	}
     };
@@ -89,6 +91,11 @@ public abstract class MiniGame extends RelativeLayout {
      */
     private int mRounds;
 
+    /**
+     * holds the current PointProvider
+     */
+    public PointProvider mCurrentPointprovider = new FirstGets();
+    
     /**
      * @return true if the Game is solved
      */
@@ -129,6 +136,8 @@ public abstract class MiniGame extends RelativeLayout {
     public boolean getCorrectness() {
 	return mCorrectness;
     }
+    
+    
 
     /**
      * should only set true, if the players are able to solve the game
@@ -166,38 +175,9 @@ public abstract class MiniGame extends RelativeLayout {
      * @param player
      */
     public Correctness onGuess(Player player) {
+	
+	return mCurrentPointprovider.evalCorrectness(getCorrectness(),player,this);
 
-	Correctness result = Correctness.incorrect;
-	if (getCorrectness()) {
-	    // Game is correct
-	    if (!isSolved()) {
-		// First who guessed correct
-		// Points++
-		result = Correctness.correct;
-	    } else {
-		// Player was to late, someone else was faster
-		// Points don't change
-		result = Correctness.toolate;
-	    }
-	    // now no one can get points
-	    setSolved(true);
-	    // start next game in 1 second
-	    mNewGameTimer.schedule(new TimerTask() {
-
-		@Override
-		public void run() {
-		    mHandler.post(mNextGameTimer);
-		}
-	    }, 1000);
-
-	} else {
-	    // Game isn't correct
-	    if (!mSolved) {
-		// Player gets Points--
-		result = Correctness.incorrect;
-	    }
-	}
-	return result;
     };
 
     /**
@@ -212,6 +192,14 @@ public abstract class MiniGame extends RelativeLayout {
     };
     
     /**
+     * 
+     * @return
+     */
+    public void setPointProvider(PointProvider provider){
+	mCurrentPointprovider = provider;
+    }
+    
+    /**
      * starts the Game
      */
     abstract public void startGame();
@@ -224,13 +212,17 @@ public abstract class MiniGame extends RelativeLayout {
     abstract protected void showIntroductions(int seconds);
 
     public void onNextGame(final View v) {
-	if (NextGameListener != null) {
-	    NextGameListener.onNextGame(this);
+	if (mNextGameListener != null) {
+	    mNextGameListener.onNextGame(this);
 	}
     }
 
     public void setOnNextGameListener(final OnNextGameListener l) {
-	NextGameListener = l;
+	mNextGameListener = l;
+    }
+    
+    public OnNextGameListener getOnNextGameListener(){
+	return mNextGameListener;
     }
     
     abstract public CharSequence getDescription();
