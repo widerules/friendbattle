@@ -1,11 +1,13 @@
 package de.passsy.friendbattle.data;
 
+import android.graphics.Color;
 import de.passsy.friendbattle.controls.Buzzer;
 
 public class Player {
     private int mId;
     private int mPoints = 0;
     private Buzzer mBuzzer;
+    private Color mColor;
     
     /**
      * 
@@ -38,6 +40,14 @@ public class Player {
 
     public void setBuzzer(Buzzer buzzer) {
         this.mBuzzer = buzzer;
+    }
+
+    public Color getColor() {
+	return mColor;
+    }
+
+    public void setColor(Color mColor) {
+	this.mColor = mColor;
     }
     
     

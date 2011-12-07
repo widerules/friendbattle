@@ -26,7 +26,7 @@ public class FirstGets extends PointProvider {
 		result = Correctness.toolate;
 	    }
 	    // now no one can get points
-	    mSolved = true;
+	    mSolved = true; 
 	    // start next game in 1 second
 
 	    GoodTimer timer = new GoodTimer(1000, false);
