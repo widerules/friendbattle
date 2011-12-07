@@ -1,5 +1,7 @@
 package de.passsy.friendbattle.controls;
 
+import java.util.GregorianCalendar;
+
 import de.passsy.friendbattle.R;
 import de.passsy.friendbattle.R.drawable;
 import de.passsy.friendbattle.R.id;
@@ -8,7 +10,11 @@ import de.passsy.friendbattle.R.styleable;
 import de.passsy.friendbattle.data.Player;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.hardware.Camera.PreviewCallback;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,12 +30,15 @@ public class Buzzer extends RelativeLayout {
 
     private OnBuzzListener mBuzzListener;
     private Player mPlayer;
-    private TextViewFlipped mPoints_txt;
+    private TextView mPoints_txt;
     private ImageView mBackground;
     private Boolean mFlipped = false;
     private Boolean mCorrectBuzz = false;
     private Boolean mTooLateBuzz = false;
-
+    private View mColorView;
+    private int mColor;
+    private int mPreviousY;
+    
     private int mPoints = 0;
     private TextView mText_txt;
 
@@ -46,14 +55,19 @@ public class Buzzer extends RelativeLayout {
 
     private void init(Context context) {
 	LayoutInflater.from(context).inflate(R.layout.buzzer, this, true);
-	mBackground = (ImageView) findViewById(R.id.background);
-	setOnTouchListener(new OnTouchListener() {
+	findViews();
+	setColor(0xFF0000);
+	this.setOnTouchListener(new OnTouchListener() {
+
+	    
 
 	    @Override
 	    public boolean onTouch(View v, MotionEvent event) {
 		final int action = event.getAction();
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
+		    mPreviousY = (int)event.getY();
+		    
 		    if (mBuzzListener != null && mPlayer != null) {
 			mBuzzListener.onBuzz(Buzzer.this);
 			int image = 0;
@@ -81,6 +95,7 @@ public class Buzzer extends RelativeLayout {
 		    break;
 
 		case MotionEvent.ACTION_MOVE:
+		    onMove(event);
 		    break;
 
 		case MotionEvent.ACTION_UP:
@@ -98,15 +113,82 @@ public class Buzzer extends RelativeLayout {
 
 		return true;
 	    }
+
 	});
 
-	mPoints_txt = (TextViewFlipped) findViewById(R.id.points_txt);
+    }
+
+    private void findViews() {
+
+	mBackground = (ImageView) findViewById(R.id.background);
+	mPoints_txt = (TextView) findViewById(R.id.points_txt);
+	mColorView = (View) findViewById(R.id.color_view);
     }
 
     public void onBuzz(final View v) {
 	if (mBuzzListener != null) {
 	    mBuzzListener.onBuzz(this);
 	}
+    }
+
+    /**
+     * sets the Color of the 
+     * @param color
+     */
+    private void setColor(int color) {
+	mColor = color;
+	mColorView.setBackgroundColor(color);
+    }
+    
+    private void setColor(Color color){
+	setColor(color.hashCode());
+    }
+    
+    private int getColor(){
+	return mColor;
+    }
+
+    private void onMove(MotionEvent event) {
+	int y = (int) event.getY();
+	int delta = (mPreviousY - y)*2;
+	mPreviousY = y;
+	int red = 0, green = 0, blue = 0;
+	blue = mColor & 0xFF;
+	green =(mColor >> 8) & 0xFF; 
+	red =(mColor >> 16) & 0xFF;
+	Log.v("tag","before rgb:"+red+" "+green+" "+blue);
+	if(red == 255 && green < 255 && blue == 0 ){
+	    green += Math.abs(delta);
+	}
+	if(red > 0 && green == 255 && blue == 0){
+	    red -= Math.abs(delta);
+	}
+	if(red == 0 && green == 255 && blue < 255){
+	    blue += Math.abs(delta);
+	}
+	if(red == 0 && green > 0 && blue == 255){
+	    green -= Math.abs(delta);
+	}
+	if(red < 255 && green == 0 && blue == 255){
+	    red += Math.abs(delta);
+	}
+	if(red == 255 && green == 0 && blue > 0){
+	    blue -= Math.abs(delta);
+	}
+	
+	Log.v("tag","rgb:"+red+green+blue);
+	
+	setColor(new Color().rgb(isHex(red), isHex(green), isHex(blue)));
+    }
+    
+    private int isHex(int i){
+	if(i > 255){
+	    i = 255;
+	}
+	if(i < 0){
+	    i = 0;
+	}
+	return i;
     }
 
     public void setOnBuzzListener(final OnBuzzListener l) {
@@ -130,8 +212,6 @@ public class Buzzer extends RelativeLayout {
 	    final boolean flipped = attributes.getBoolean(
 		    R.styleable.Buzzer_flipped, false);
 	    if (flipped) {
-		mBackground.setImageResource(R.drawable.buzzerdownup);
-		mPoints_txt.setFlipped(true);
 		mFlipped = true;
 	    }
 	    attributes.recycle();
@@ -164,6 +244,22 @@ public class Buzzer extends RelativeLayout {
 
     public void setTooLateBuzz(Boolean tooLateBuzz) {
 	this.mTooLateBuzz = tooLateBuzz;
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+	if (mFlipped) {
+	    canvas.save();
+	    float py = this.getHeight() / 2.0f;
+	    float px = this.getWidth() / 2.0f;
+	    canvas.rotate(180, px, py);
+
+	    super.dispatchDraw(canvas);
+
+	    canvas.restore();
+	} else {
+	    super.dispatchDraw(canvas);
+	}
     }
 
 }

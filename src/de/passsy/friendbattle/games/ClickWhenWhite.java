@@ -3,6 +3,9 @@ package de.passsy.friendbattle.games;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.passsy.friendbattle.controllers.FirstGets;
+import de.passsy.friendbattle.controllers.PointProvider;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
@@ -56,5 +59,6 @@ public class ClickWhenWhite extends MiniGame{
     public CharSequence getDescription() {
 	return "Click if the color is white";
     }
+
 
 }
