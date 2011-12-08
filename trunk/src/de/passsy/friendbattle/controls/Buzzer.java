@@ -1,18 +1,15 @@
 package de.passsy.friendbattle.controls;
 
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import de.passsy.friendbattle.R;
-import de.passsy.friendbattle.R.drawable;
-import de.passsy.friendbattle.R.id;
-import de.passsy.friendbattle.R.layout;
-import de.passsy.friendbattle.R.styleable;
 import de.passsy.friendbattle.data.Player;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.hardware.Camera.PreviewCallback;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +35,7 @@ public class Buzzer extends RelativeLayout {
     private View mColorView;
     private int mColor;
     private int mPreviousY;
-    
+
     private int mPoints = 0;
     private TextView mText_txt;
 
@@ -51,42 +48,32 @@ public class Buzzer extends RelativeLayout {
 	super(context, attrs);
 	init(context);
 	analyseAttributes(context, attrs);
+
     }
 
     private void init(Context context) {
 	LayoutInflater.from(context).inflate(R.layout.buzzer, this, true);
 	findViews();
-	setColor(0xFF0000);
+	setRandomColor();
 	this.setOnTouchListener(new OnTouchListener() {
-
-	    
 
 	    @Override
 	    public boolean onTouch(View v, MotionEvent event) {
 		final int action = event.getAction();
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
-		    mPreviousY = (int)event.getY();
-		    
+		    mPreviousY = (int) event.getY();
+
 		    if (mBuzzListener != null && mPlayer != null) {
 			mBuzzListener.onBuzz(Buzzer.this);
 			int image = 0;
-			if (mFlipped) {
-			    if (mTooLateBuzz) {
-				image = R.drawable.buzzerupdown_gray;
-			    } else if (mCorrectBuzz) {
-				image = R.drawable.buzzerupdown_green;
-			    } else {
-				image = R.drawable.buzzerupdown_red;
-			    }
+
+			if (mTooLateBuzz) {
+			    image = R.drawable.buzzerdownup_gray;
+			} else if (mCorrectBuzz) {
+			    image = R.drawable.buzzerdownup_green;
 			} else {
-			    if (mTooLateBuzz) {
-				image = R.drawable.buzzerdownup_gray;
-			    } else if (mCorrectBuzz) {
-				image = R.drawable.buzzerdownup_green;
-			    } else {
-				image = R.drawable.buzzerdownup_red;
-			    }
+			    image = R.drawable.buzzerdownup_red;
 			}
 			mBackground.setImageResource(image);
 			setCorrectBuzz(false);
@@ -100,12 +87,7 @@ public class Buzzer extends RelativeLayout {
 
 		case MotionEvent.ACTION_UP:
 
-		    if (mFlipped) {
-			mBackground.setImageResource(R.drawable.buzzerdownup);
-		    } else {
-			mBackground.setImageResource(R.drawable.buzzerupdown);
-		    }
-		    break;
+		    mBackground.setImageResource(R.drawable.buzzerupdown);
 
 		case MotionEvent.ACTION_CANCEL:
 		    break;
@@ -115,6 +97,31 @@ public class Buzzer extends RelativeLayout {
 	    }
 
 	});
+
+    }
+
+    private void setRandomColor() {
+	Random rand = new Random();
+	List<Integer> rgb = new ArrayList<Integer>();
+
+	final int red = (int) (Math.round(Math.random()) * 255);
+	final int green = (int) (Math.round(Math.random()) * 255);
+	final int blue = (int) (Math.round(Math.random()) * 255);
+
+	rgb.add(red);
+	rgb.add(green);
+	rgb.add(blue);
+
+	rgb.get((int) (Math.round(Math.random())));
+
+	Log.v("tag", "random" + red + " " + green + " " + blue);
+	if (red + green + blue == 3 * 255 || red + green + blue == 0) {
+	    Log.v("tag", "wrong colors");
+	    setRandomColor();
+	    return;
+	} else {
+	    setColor(Color.rgb(red, green, blue));
+	}
 
     }
 
@@ -132,60 +139,28 @@ public class Buzzer extends RelativeLayout {
     }
 
     /**
-     * sets the Color of the 
+     * sets the Color of the
+     * 
      * @param color
      */
     private void setColor(int color) {
 	mColor = color;
 	mColorView.setBackgroundColor(color);
     }
-    
-    private void setColor(Color color){
+
+    private void setColor(Color color) {
 	setColor(color.hashCode());
     }
-    
-    private int getColor(){
+
+    private int getColor() {
 	return mColor;
     }
 
-    private void onMove(MotionEvent event) {
-	int y = (int) event.getY();
-	int delta = (mPreviousY - y)*2;
-	mPreviousY = y;
-	int red = 0, green = 0, blue = 0;
-	blue = mColor & 0xFF;
-	green =(mColor >> 8) & 0xFF; 
-	red =(mColor >> 16) & 0xFF;
-	Log.v("tag","before rgb:"+red+" "+green+" "+blue);
-	if(red == 255 && green < 255 && blue == 0 ){
-	    green += Math.abs(delta);
-	}
-	if(red > 0 && green == 255 && blue == 0){
-	    red -= Math.abs(delta);
-	}
-	if(red == 0 && green == 255 && blue < 255){
-	    blue += Math.abs(delta);
-	}
-	if(red == 0 && green > 0 && blue == 255){
-	    green -= Math.abs(delta);
-	}
-	if(red < 255 && green == 0 && blue == 255){
-	    red += Math.abs(delta);
-	}
-	if(red == 255 && green == 0 && blue > 0){
-	    blue -= Math.abs(delta);
-	}
-	
-	Log.v("tag","rgb:"+red+green+blue);
-	
-	setColor(new Color().rgb(isHex(red), isHex(green), isHex(blue)));
-    }
-    
-    private int isHex(int i){
-	if(i > 255){
+    private int isHex(int i) {
+	if (i > 255) {
 	    i = 255;
 	}
-	if(i < 0){
+	if (i < 0) {
 	    i = 0;
 	}
 	return i;
@@ -249,17 +224,73 @@ public class Buzzer extends RelativeLayout {
     @Override
     protected void dispatchDraw(Canvas canvas) {
 	if (mFlipped) {
+
 	    canvas.save();
 	    float py = this.getHeight() / 2.0f;
 	    float px = this.getWidth() / 2.0f;
 	    canvas.rotate(180, px, py);
-
 	    super.dispatchDraw(canvas);
+	    // invalidate();
 
 	    canvas.restore();
 	} else {
 	    super.dispatchDraw(canvas);
 	}
+    }
+
+    private void onMove(MotionEvent event) {
+	int y = (int) event.getY();
+	int delta = (mPreviousY - y) * 2;
+	mPreviousY = y;
+	int red = 0, green = 0, blue = 0;
+	blue = mColor & 0xFF;
+	green = (mColor >> 8) & 0xFF;
+	red = (mColor >> 16) & 0xFF;
+	Log.v("tag", "before rgb:" + red + " " + green + " " + blue);
+	if (delta > 0) {
+	    if (red == 255 && green < 255 && blue == 0) {
+		green += Math.abs(delta);
+	    }
+	    if (red > 0 && green == 255 && blue == 0) {
+		red -= Math.abs(delta);
+	    }
+	    if (red == 0 && green == 255 && blue < 255) {
+		blue += Math.abs(delta);
+	    }
+	    if (red == 0 && green > 0 && blue == 255) {
+		green -= Math.abs(delta);
+	    }
+	    if (red < 255 && green == 0 && blue == 255) {
+		red += Math.abs(delta);
+	    }
+	    if (red == 255 && green == 0 && blue > 0) {
+		blue -= Math.abs(delta);
+	    }
+	} else {
+	    if (red < 255 && green == 255 && blue == 0) {
+		red += Math.abs(delta);
+	    }
+	    if (red == 255 && green > 0 && blue == 0) {
+		green -= Math.abs(delta);
+	    }
+	    if (red == 255 && green == 0 && blue < 255) {
+		blue += Math.abs(delta);
+	    }
+	    if (red > 0 && green == 0 && blue == 255) {
+		red -= Math.abs(delta);
+	    }
+	    if (red == 0 && green < 255 && blue == 255) {
+		green += Math.abs(delta);
+	    }
+	    if (red == 0 && green == 255 && blue > 0) {
+		blue -= Math.abs(delta);
+	    }
+	}
+
+	Log.v("tag", "rgb:" + red + green + blue);
+
+	setColor(new Color().rgb(isHex(red), isHex(green), isHex(blue)));
+	invalidate();
     }
 
 }
