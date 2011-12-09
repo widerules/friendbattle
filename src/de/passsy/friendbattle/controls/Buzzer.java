@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import de.passsy.friendbattle.R;
-import de.passsy.friendbattle.data.Player;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -18,6 +16,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import de.passsy.friendbattle.R;
+import de.passsy.friendbattle.data.Player;
 
 public class Buzzer extends RelativeLayout {
 

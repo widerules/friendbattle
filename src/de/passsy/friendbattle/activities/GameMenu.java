@@ -3,13 +3,6 @@ package de.passsy.friendbattle.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.passsy.friendbattle.FriendBattle;
-import de.passsy.friendbattle.R;
-import de.passsy.friendbattle.R.id;
-import de.passsy.friendbattle.R.layout;
-import de.passsy.friendbattle.controls.Buzzer;
-import de.passsy.friendbattle.games.ClickWhenWhite;
-import de.passsy.friendbattle.utility.Tools;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +13,10 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import de.passsy.friendbattle.FriendBattle;
+import de.passsy.friendbattle.R;
+import de.passsy.friendbattle.controls.Buzzer;
+import de.passsy.friendbattle.games.ClickWhenWhite;
 
 public class GameMenu extends Activity {
 

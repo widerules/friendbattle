@@ -1,15 +1,11 @@
 package de.passsy.friendbattle.controls;
 
-import de.passsy.friendbattle.R;
-import de.passsy.friendbattle.R.styleable;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.graphics.Shader.TileMode;
 import android.util.AttributeSet;
 import android.widget.TextView;
+import de.passsy.friendbattle.R;
 
 public class TextViewFlipped extends TextView {
     

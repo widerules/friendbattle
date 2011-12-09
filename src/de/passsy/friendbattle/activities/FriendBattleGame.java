@@ -1,27 +1,7 @@
 package de.passsy.friendbattle.activities;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import de.passsy.friendbattle.FriendBattle;
-import de.passsy.friendbattle.R;
-import de.passsy.friendbattle.R.id;
-import de.passsy.friendbattle.R.layout;
-import de.passsy.friendbattle.controllers.GameCycle;
-import de.passsy.friendbattle.controllers.GameCycle.OnEndListener;
-import de.passsy.friendbattle.controllers.GameCycle.OnNewGameListener;
-import de.passsy.friendbattle.controls.Buzzer;
-import de.passsy.friendbattle.controls.TextViewFlipped;
-import de.passsy.friendbattle.controls.Buzzer.OnBuzzListener;
-import de.passsy.friendbattle.data.Player;
-import de.passsy.friendbattle.games.ClickWhenWhite;
-import de.passsy.friendbattle.games.MiniGame;
-import de.passsy.friendbattle.games.MiniGame.Correctness;
-import de.passsy.friendbattle.games.MiniGame.OnNextGameListener;
-import de.passsy.friendbattle.screenlayouts.Screen_Winner;
-import de.passsy.friendbattle.screenlayouts.Screen_Winner.OnRestartListener;
-import de.passsy.friendbattle.utility.Tools;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -30,8 +10,19 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import de.passsy.friendbattle.FriendBattle;
+import de.passsy.friendbattle.R;
+import de.passsy.friendbattle.controllers.GameCycle;
+import de.passsy.friendbattle.controllers.GameCycle.OnEndListener;
+import de.passsy.friendbattle.controllers.GameCycle.OnNewGameListener;
+import de.passsy.friendbattle.controls.Buzzer;
+import de.passsy.friendbattle.controls.Buzzer.OnBuzzListener;
+import de.passsy.friendbattle.controls.TextViewFlipped;
+import de.passsy.friendbattle.data.Player;
+import de.passsy.friendbattle.games.MiniGame;
+import de.passsy.friendbattle.games.MiniGame.Correctness;
+import de.passsy.friendbattle.screenlayouts.Screen_Winner;
+import de.passsy.friendbattle.screenlayouts.Screen_Winner.OnRestartListener;
 
 public class FriendBattleGame extends Activity {
 

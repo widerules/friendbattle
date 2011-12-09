@@ -1,16 +1,12 @@
 package de.passsy.friendbattle.screenlayouts;
 
-import de.passsy.friendbattle.FriendBattle;
-import de.passsy.friendbattle.R;
-import de.passsy.friendbattle.R.id;
-import de.passsy.friendbattle.R.layout;
-import de.passsy.friendbattle.controls.TextViewFlipped;
-import de.passsy.friendbattle.utility.Tools;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
+import de.passsy.friendbattle.R;
+import de.passsy.friendbattle.controls.TextViewFlipped;
 
 public class Screen_TextViewsCenter extends RelativeLayout {
 

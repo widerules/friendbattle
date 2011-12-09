@@ -2,6 +2,7 @@ package de.passsy.friendbattle.utility;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 import android.os.Handler;
 
 public class GoodTimer {
