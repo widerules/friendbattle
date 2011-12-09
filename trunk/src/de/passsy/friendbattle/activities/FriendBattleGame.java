@@ -147,6 +147,10 @@ public class FriendBattleGame extends Activity {
 	mDifficulty = extras.getInt("difficulty");
 	mPlayerNumber = extras.getInt("players");
 	mRounds = extras.getInt("rounds");
+	int colors[] = extras.getIntArray("buzzercolors");
+	for (int i = 0; i < colors.length; i++) {
+	    mBuzzer.get(i).setColor(colors[i]);
+	}
 	Log.v("tag", mRounds + "");
     }
 
