@@ -34,6 +34,7 @@ public class Buzzer extends RelativeLayout {
     private Boolean mTooLateBuzz = false;
     private View mColorView;
     private int mColor;
+    private Boolean mAllowUserChangeColor = true;
 
     private int mPreviousY;
 
@@ -239,6 +240,10 @@ public class Buzzer extends RelativeLayout {
     }
 
     private void changeColor(final int delta) {
+	if (!mAllowUserChangeColor) {
+	    return;
+	}
+
 	int blue = mColor & 0xFF;
 	int green = (mColor >> 8) & 0xFF;
 	int red = (mColor >> 16) & 0xFF;
@@ -294,8 +299,18 @@ public class Buzzer extends RelativeLayout {
 	final int y = (int) event.getY();
 	final int delta = (mPreviousY - y) * 2;
 	mPreviousY = y;
-	changeColor(delta);
+	if (mAllowUserChangeColor) {
+	    changeColor(delta);
+	}
 
+    }
+
+    public Boolean getAllowUserChangeColor() {
+	return mAllowUserChangeColor;
+    }
+
+    public void setAllowUserChangeColor(Boolean mAllowChangeColor) {
+	this.mAllowUserChangeColor = mAllowChangeColor;
     }
 
 }
