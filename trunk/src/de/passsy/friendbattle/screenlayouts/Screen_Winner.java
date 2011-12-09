@@ -1,16 +1,13 @@
 package de.passsy.friendbattle.screenlayouts;
 
-import de.passsy.friendbattle.FriendBattle;
-import de.passsy.friendbattle.R;
-import de.passsy.friendbattle.R.id;
-import de.passsy.friendbattle.R.layout;
-import de.passsy.friendbattle.utility.Tools;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import de.passsy.friendbattle.FriendBattle;
+import de.passsy.friendbattle.R;
 
 public class Screen_Winner extends RelativeLayout {
 

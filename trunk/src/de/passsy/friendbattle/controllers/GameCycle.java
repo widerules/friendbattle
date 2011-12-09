@@ -7,14 +7,12 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-
 import de.passsy.friendbattle.games.ClickWhenColor;
 import de.passsy.friendbattle.games.ClickWhenWhite;
 import de.passsy.friendbattle.games.GuessWhen;
 import de.passsy.friendbattle.games.MiniGame;
 import de.passsy.friendbattle.games.MiniGame.OnNextGameListener;
 import de.passsy.friendbattle.games.NoGame;
-import de.passsy.friendbattle.screenlayouts.Screen_TextViewsCenter;
 
 public class GameCycle {
     

@@ -60,5 +60,4 @@ public class FriendBattle extends Application {
         mCurrentActivity.startActivity(intent);
         
     }
-
 }

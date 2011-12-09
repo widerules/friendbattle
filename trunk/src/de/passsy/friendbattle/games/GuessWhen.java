@@ -1,13 +1,9 @@
 package de.passsy.friendbattle.games;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 import android.content.Context;
 import android.os.Handler;
-import de.passsy.friendbattle.FriendBattle;
-import de.passsy.friendbattle.controllers.FirstGets;
-import de.passsy.friendbattle.controllers.PointProvider;
 import de.passsy.friendbattle.screenlayouts.Screen_TextViewsCenter;
 import de.passsy.friendbattle.utility.GoodTimer;
 import de.passsy.friendbattle.utility.GoodTimer.OnTimerListener;

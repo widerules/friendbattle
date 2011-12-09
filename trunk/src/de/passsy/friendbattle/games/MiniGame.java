@@ -1,19 +1,15 @@
 package de.passsy.friendbattle.games;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
-import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.controllers.FirstGets;
 import de.passsy.friendbattle.controllers.PointProvider;
 import de.passsy.friendbattle.data.Player;
-import de.passsy.friendbattle.utility.Tools;
 
 /**
  * The MiniGames for FriendBattle

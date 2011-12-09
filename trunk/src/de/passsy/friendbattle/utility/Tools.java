@@ -1,11 +1,7 @@
 package de.passsy.friendbattle.utility;
 
-import de.passsy.friendbattle.FriendBattle;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Toast;
+import de.passsy.friendbattle.FriendBattle;
 
 public class Tools {
     
