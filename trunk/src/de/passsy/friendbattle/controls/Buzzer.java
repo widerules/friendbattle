@@ -38,9 +38,6 @@ public class Buzzer extends RelativeLayout {
 
     private int mPreviousY;
 
-    private final int mPoints = 0;
-    private TextView mText_txt;
-
     public Buzzer(final Context context) {
 	super(context);
 	init(context);
@@ -292,6 +289,8 @@ public class Buzzer extends RelativeLayout {
 
 	new Color();
 	setColor(Color.rgb(isHex(red), isHex(green), isHex(blue)));
+	// mPoints_txt.setTextColor(IdealTextColor(isHex(red),
+	// isHex(green),isHex(blue)));
 	invalidate();
     }
 
@@ -303,6 +302,15 @@ public class Buzzer extends RelativeLayout {
 	    changeColor(delta);
 	}
 
+    }
+
+    public int IdealTextColor(int r, int g, int b) {
+	int threshold = 110;
+	int bgDelta = (int) ((r * 0.299) + (g * 0.587) + (b * 0.114));
+
+	int foreColor = (255 - bgDelta < threshold) ? Color.BLACK : Color.WHITE;
+	Log.v("tag", "" + foreColor);
+	return foreColor;
     }
 
     public Boolean getAllowUserChangeColor() {
