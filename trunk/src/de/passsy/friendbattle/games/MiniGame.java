@@ -33,13 +33,14 @@ public abstract class MiniGame extends RelativeLayout {
 
     /**
      * Enum for the orrectness state
+     * 
      * @author Pascal.Welsch
-     *
+     * 
      */
     public enum Correctness {
 	correct, incorrect, toolate;
     }
-    
+
     /**
      * How long the Introductions are shown
      */
@@ -64,7 +65,7 @@ public abstract class MiniGame extends RelativeLayout {
     /**
      * timer that runs if the Game is solved by a User to start the next Game
      */
-    private Timer mNewGameTimer = new Timer();
+    private final Timer mNewGameTimer = new Timer();
 
     /**
      * Handler to run the mFireTimer from the Timer thread
@@ -75,6 +76,7 @@ public abstract class MiniGame extends RelativeLayout {
      * This Runnable is Called from the mNewGameTimer
      */
     final Runnable mNextGameTimer = new Runnable() {
+	@Override
 	public void run() {
 	    if (mNextGameListener != null) {
 		mNextGameListener.onNextGame(MiniGame.this);
@@ -91,7 +93,7 @@ public abstract class MiniGame extends RelativeLayout {
      * holds the current PointProvider
      */
     public PointProvider mCurrentPointprovider = new FirstGets();
-    
+
     /**
      * @return true if the Game is solved
      */
@@ -105,7 +107,7 @@ public abstract class MiniGame extends RelativeLayout {
      * @param mSolved
      *            solvable?
      */
-    private void setSolved(boolean mSolved) {
+    private void setSolved(final boolean mSolved) {
 	this.mSolved = mSolved;
     }
 
@@ -122,7 +124,7 @@ public abstract class MiniGame extends RelativeLayout {
      * @param mRounds
      *            rounds per game
      */
-    public void setRounds(int mRounds) {
+    public void setRounds(final int mRounds) {
 	this.mRounds = mRounds;
     }
 
@@ -132,8 +134,6 @@ public abstract class MiniGame extends RelativeLayout {
     public boolean getCorrectness() {
 	return mCorrectness;
     }
-    
-    
 
     /**
      * should only set true, if the players are able to solve the game
@@ -141,8 +141,8 @@ public abstract class MiniGame extends RelativeLayout {
      * @param isCorrect
      *            game is correct and can solved?
      */
-    public void setCorrectness(boolean isCorrect) {
-	this.mCorrectness = isCorrect;
+    public void setCorrectness(final boolean isCorrect) {
+	mCorrectness = isCorrect;
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class MiniGame extends RelativeLayout {
      * 
      * @param context
      */
-    public MiniGame(Context context) {
+    public MiniGame(final Context context) {
 	super(context);
     }
 
@@ -160,7 +160,7 @@ public abstract class MiniGame extends RelativeLayout {
      * @param context
      * @param attrs
      */
-    public MiniGame(Context context, AttributeSet attrs) {
+    public MiniGame(final Context context, final AttributeSet attrs) {
 	super(context, attrs);
     }
 
@@ -170,9 +170,10 @@ public abstract class MiniGame extends RelativeLayout {
      * 
      * @param player
      */
-    public Correctness onGuess(Player player) {
-	
-	return mCurrentPointprovider.evalCorrectness(getCorrectness(),player,this);
+    public Correctness onGuess(final Player player) {
+
+	return mCurrentPointprovider.evalCorrectness(getCorrectness(), player,
+		this);
 
     };
 
@@ -183,23 +184,23 @@ public abstract class MiniGame extends RelativeLayout {
      */
     public void start() {
 	showIntroductions(HOWTO_TIME);
-	
+
 	startGame();
     };
-    
+
     /**
      * 
      * @return
      */
-    public void setPointProvider(PointProvider provider){
+    public void setPointProvider(final PointProvider provider) {
 	mCurrentPointprovider = provider;
     }
-    
+
     /**
      * starts the Game
      */
     abstract public void startGame();
-    
+
     /**
      * shows the introduction at the beginning of every Game
      * 
@@ -216,11 +217,11 @@ public abstract class MiniGame extends RelativeLayout {
     public void setOnNextGameListener(final OnNextGameListener l) {
 	mNextGameListener = l;
     }
-    
-    public OnNextGameListener getOnNextGameListener(){
+
+    public OnNextGameListener getOnNextGameListener() {
 	return mNextGameListener;
     }
-    
+
     abstract public CharSequence getDescription();
 
 }

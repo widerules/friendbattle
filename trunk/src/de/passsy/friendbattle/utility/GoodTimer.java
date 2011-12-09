@@ -24,20 +24,20 @@ public class GoodTimer {
 
     private boolean mRepeat = false;
 
-    private int mDelay = 0;
+    private final int mDelay = 0;
 
     Timer mTimer = new Timer();
 
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 
-    private int mTimeout;
+    private final int mTimeout;
 
     private boolean mRunning;
 
     public GoodTimer(final int timeout, final boolean repeat) {
 
-	this.mRepeat = repeat;
-	this.mTimeout = timeout;
+	mRepeat = repeat;
+	mTimeout = timeout;
     }
 
     public void start() {
@@ -62,7 +62,7 @@ public class GoodTimer {
 
 		    }
 		}, mTimeout, mTimeout);
-	    } catch (Exception e) {
+	    } catch (final Exception e) {
 		e.printStackTrace();
 	    }
 	} else {
@@ -101,7 +101,7 @@ public class GoodTimer {
 		    mTimer.wait();
 		    mRunning = false;
 		}
-	    } catch (InterruptedException e) {
+	    } catch (final InterruptedException e) {
 		e.printStackTrace();
 	    }
 	}

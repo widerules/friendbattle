@@ -5,23 +5,23 @@ import de.passsy.friendbattle.data.Player;
 
 public class NoGame extends MiniGame {
 
-    public NoGame(Context context) {
+    public NoGame(final Context context) {
 	super(context);
     }
 
     @Override
-    protected void showIntroductions(int seconds) {
-	
+    protected void showIntroductions(final int seconds) {
+
     }
-    
+
     @Override
-    public Correctness onGuess(Player player) {
+    public Correctness onGuess(final Player player) {
 	return Correctness.toolate;
     }
 
     @Override
     public void startGame() {
-	//do nothing
+	// do nothing
     }
 
     @Override

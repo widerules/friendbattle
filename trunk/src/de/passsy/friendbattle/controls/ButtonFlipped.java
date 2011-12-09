@@ -11,50 +11,52 @@ public class ButtonFlipped extends Button {
 
     private boolean mFlipped = false;
 
-
-    public ButtonFlipped(Context context, AttributeSet attrs) {
+    public ButtonFlipped(final Context context, final AttributeSet attrs) {
 	super(context, attrs);
 	analyseAttributes(context, attrs);
-	
+
     }
-    private void analyseAttributes(Context context, AttributeSet attrs) {
+
+    private void analyseAttributes(final Context context,
+	    final AttributeSet attrs) {
 	if (attrs != null) {
 
-	    final TypedArray attributes = context.obtainStyledAttributes(attrs,R.styleable.Buzzer);
+	    final TypedArray attributes = context.obtainStyledAttributes(attrs,
+		    R.styleable.Buzzer);
 
-	    final boolean flipped = attributes.getBoolean(R.styleable.Buzzer_flipped, false);
+	    final boolean flipped = attributes.getBoolean(
+		    R.styleable.Buzzer_flipped, false);
 	    if (flipped) {
 		setFlipped(true);
 	    }
 	    attributes.recycle();
 	}
-	
+
     }
 
     @Override
     protected void onDraw(final Canvas canvas) {
 
-	if(mFlipped ){
-    	    canvas.save();
-    	    float py = this.getHeight()/2.0f;
-    	    float px = this.getWidth()/2.0f;
-    	    canvas.rotate(180, px, py);
-    	    
-    	    super.onDraw(canvas);
-    
-    	    canvas.restore();
+	if (mFlipped) {
+	    canvas.save();
+	    final float py = getHeight() / 2.0f;
+	    final float px = getWidth() / 2.0f;
+	    canvas.rotate(180, px, py);
+
+	    super.onDraw(canvas);
+
+	    canvas.restore();
 	} else {
 	    super.onDraw(canvas);
 	}
     }
 
     public Boolean getFlipped() {
-        return mFlipped;
+	return mFlipped;
     }
-    
 
-    public void setFlipped(Boolean flipped) {
-        this.mFlipped = flipped;
+    public void setFlipped(final Boolean flipped) {
+	mFlipped = flipped;
     }
 
 }

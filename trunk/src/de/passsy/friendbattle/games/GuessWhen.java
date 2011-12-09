@@ -10,47 +10,46 @@ import de.passsy.friendbattle.utility.GoodTimer.OnTimerListener;
 
 public class GuessWhen extends MiniGame {
 
-    private Screen_TextViewsCenter mTextViews;
+    private final Screen_TextViewsCenter mTextViews;
 
     Timer mTimer = new Timer();
 
-    private Handler mHandler = new Handler();
-    
-    private GoodTimer timer;
-    
-    private OnTimerListener onTimerListener = new OnTimerListener() {
-        
-	     int i = 0;
-	    	int time = (int) Math.round((Math.random() * 6)) + 5;
-	    	int max = time;
-	
-        @Override
-        public void onTimer() {
-       
-    	    time--;
+    private final Handler mHandler = new Handler();
 
-    	    if (time > (int)(max / 2)-1) {
-    		mTextViews.setText("" + time);
-    	    } else {
-    		mTextViews.setText("?");
-    	    }
-    	    if (time == 0) {
-    		setCorrectness(true);
-    	    }
-    	    if (time == -1) {
-    		showStats();
-    		timer.stop();
-    	    }
-    	    
-    	
-        }
+    private GoodTimer timer;
+
+    private final OnTimerListener onTimerListener = new OnTimerListener() {
+
+	int i = 0;
+	int time = (int) Math.round((Math.random() * 6)) + 5;
+	int max = time;
+
+	@Override
+	public void onTimer() {
+
+	    time--;
+
+	    if (time > (max / 2) - 1) {
+		mTextViews.setText("" + time);
+	    } else {
+		mTextViews.setText("?");
+	    }
+	    if (time == 0) {
+		setCorrectness(true);
+	    }
+	    if (time == -1) {
+		showStats();
+		timer.stop();
+	    }
+
+	}
     };
-    
+
     private void showStats() {
-	    
+
     }
-    
-    public GuessWhen(Context context) {
+
+    public GuessWhen(final Context context) {
 	super(context);
 	mTextViews = new Screen_TextViewsCenter(context);
 	this.addView(mTextViews);
@@ -59,19 +58,16 @@ public class GuessWhen extends MiniGame {
     }
 
     @Override
-    protected void showIntroductions(int seconds) {
+    protected void showIntroductions(final int seconds) {
 
     }
 
-
-   
-
     @Override
     public void startGame() {
-	int time = (int) Math.round((Math.random() * 1000)) + 500;
+	final int time = (int) Math.round((Math.random() * 1000)) + 500;
 
 	timer = new GoodTimer(time, true);
-	
+
 	timer.setOnTimerListener(onTimerListener);
 	timer.start();
     }

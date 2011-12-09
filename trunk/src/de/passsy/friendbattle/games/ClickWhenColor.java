@@ -8,48 +8,48 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.util.AttributeSet;
 
-public class ClickWhenColor extends MiniGame{
-    
-    private Timer timer = new Timer();
+public class ClickWhenColor extends MiniGame {
+
+    private final Timer timer = new Timer();
     private final Handler mHandler = new Handler();
-    
-    
+
     final Runnable mFireTimer = new Runnable() {
-        public void run() {
-            Action();
-        }
+	@Override
+	public void run() {
+	    Action();
+	}
     };
 
-    public ClickWhenColor(Context context) {
+    public ClickWhenColor(final Context context) {
 	super(context);
     }
-    
-    public ClickWhenColor(Context context, AttributeSet attrs) {
+
+    public ClickWhenColor(final Context context, final AttributeSet attrs) {
 	super(context, attrs);
     }
-    
+
     private void Action() {
 	setBackgroundColor(Color.RED);
 	setCorrectness(true);
     }
 
     @Override
-    protected void showIntroductions(int seconds) {
-	
+    protected void showIntroductions(final int seconds) {
+
     }
 
     @Override
     public void startGame() {
-	int time = (int) Math.round((Math.random()*10000));
-	
-        timer.schedule(new TimerTask() {
-    	    
-            @Override
-            public void run() {
-                mHandler.post(mFireTimer);
-            }
-        }, time);
-	
+	final int time = (int) Math.round((Math.random() * 10000));
+
+	timer.schedule(new TimerTask() {
+
+	    @Override
+	    public void run() {
+		mHandler.post(mFireTimer);
+	    }
+	}, time);
+
     }
 
     @Override
