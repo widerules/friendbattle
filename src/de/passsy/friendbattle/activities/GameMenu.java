@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -41,6 +43,12 @@ public class GameMenu extends Activity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
+	// hide titlebar
+	requestWindowFeature(Window.FEATURE_NO_TITLE);
+	// run in fullscreenmode
+	getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	getWindow().clearFlags(
+		WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 	FriendBattle.setCurrentActivity(this);
 	setContentView(R.layout.gamemenu);
 
