@@ -141,6 +141,7 @@ public class FriendBattleGame extends Activity {
 	final int colors[] = extras.getIntArray("buzzercolors");
 	for (int i = 0; i < colors.length; i++) {
 	    mBuzzer.get(i).setColor(colors[i]);
+	    mBuzzer.get(i).setAllowUserChangeColor(false);
 	}
 	Log.v("tag", mRounds + "");
     }
