@@ -34,6 +34,8 @@ public class Buzzer extends RelativeLayout {
     private Boolean mTooLateBuzz = false;
     private View mColorView;
     private int mColor;
+   
+
     private int mPreviousY;
 
     private int mPoints = 0;
@@ -143,16 +145,16 @@ public class Buzzer extends RelativeLayout {
      * 
      * @param color
      */
-    private void setColor(int color) {
+    public void setColor(int color) {
 	mColor = color;
 	mColorView.setBackgroundColor(color);
     }
 
-    private void setColor(Color color) {
+    public void setColor(Color color) {
 	setColor(color.hashCode());
     }
 
-    private int getColor() {
+    public int getColor() {
 	return mColor;
     }
 
@@ -220,7 +222,7 @@ public class Buzzer extends RelativeLayout {
     public void setTooLateBuzz(Boolean tooLateBuzz) {
 	this.mTooLateBuzz = tooLateBuzz;
     }
-
+    
     @Override
     protected void dispatchDraw(Canvas canvas) {
 	if (mFlipped) {
@@ -230,8 +232,7 @@ public class Buzzer extends RelativeLayout {
 	    float px = this.getWidth() / 2.0f;
 	    canvas.rotate(180, px, py);
 	    super.dispatchDraw(canvas);
-	    // invalidate();
-
+	    
 	    canvas.restore();
 	} else {
 	    super.dispatchDraw(canvas);

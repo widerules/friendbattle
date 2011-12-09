@@ -67,13 +67,11 @@ public class GameMenu extends Activity {
 	    
 	    @Override
 	    public void onStopTrackingTouch(SeekBar seekBar) {
-		// TODO Auto-generated method stub
 		setPlayers(seekBar.getProgress()+2);
 	    }
 	    
 	    @Override
 	    public void onStartTrackingTouch(SeekBar seekBar) {
-		// TODO Auto-generated method stub
 		
 	    }
 	    
@@ -143,6 +141,11 @@ public class GameMenu extends Activity {
 	arguments.putInt("difficulty", NORMAL);
 	arguments.putInt("rounds", mRounds);
 	arguments.putStringArrayList("games", mGames);
+	int[] colors = new int[6];
+	for (int i = 0; i < colors.length; i++) {
+	    colors[i] = mBuzzer.get(i).getColor();
+	}
+	arguments.putIntArray("buzzercolors",colors);
 	FriendBattle.StartActivity(FriendBattleGame.class, arguments);
     }
 
