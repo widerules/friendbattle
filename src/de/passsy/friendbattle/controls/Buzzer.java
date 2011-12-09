@@ -34,33 +34,32 @@ public class Buzzer extends RelativeLayout {
     private Boolean mTooLateBuzz = false;
     private View mColorView;
     private int mColor;
-   
 
     private int mPreviousY;
 
-    private int mPoints = 0;
+    private final int mPoints = 0;
     private TextView mText_txt;
 
-    public Buzzer(Context context) {
+    public Buzzer(final Context context) {
 	super(context);
 	init(context);
     }
 
-    public Buzzer(Context context, AttributeSet attrs) {
+    public Buzzer(final Context context, final AttributeSet attrs) {
 	super(context, attrs);
 	init(context);
 	analyseAttributes(context, attrs);
 
     }
 
-    private void init(Context context) {
+    private void init(final Context context) {
 	LayoutInflater.from(context).inflate(R.layout.buzzer, this, true);
 	findViews();
 	setRandomColor();
-	this.setOnTouchListener(new OnTouchListener() {
+	setOnTouchListener(new OnTouchListener() {
 
 	    @Override
-	    public boolean onTouch(View v, MotionEvent event) {
+	    public boolean onTouch(final View v, final MotionEvent event) {
 		final int action = event.getAction();
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
@@ -103,8 +102,8 @@ public class Buzzer extends RelativeLayout {
     }
 
     private void setRandomColor() {
-	Random rand = new Random();
-	List<Integer> rgb = new ArrayList<Integer>();
+	final Random rand = new Random();
+	final List<Integer> rgb = new ArrayList<Integer>();
 
 	final int red = (int) (Math.round(Math.random()) * 255);
 	final int green = (int) (Math.round(Math.random()) * 255);
@@ -131,7 +130,7 @@ public class Buzzer extends RelativeLayout {
 
 	mBackground = (ImageView) findViewById(R.id.background);
 	mPoints_txt = (TextView) findViewById(R.id.points_txt);
-	mColorView = (View) findViewById(R.id.color_view);
+	mColorView = findViewById(R.id.color_view);
     }
 
     public void onBuzz(final View v) {
@@ -145,12 +144,12 @@ public class Buzzer extends RelativeLayout {
      * 
      * @param color
      */
-    public void setColor(int color) {
+    public void setColor(final int color) {
 	mColor = color;
 	mColorView.setBackgroundColor(color);
     }
 
-    public void setColor(Color color) {
+    public void setColor(final Color color) {
 	setColor(color.hashCode());
     }
 
@@ -195,7 +194,7 @@ public class Buzzer extends RelativeLayout {
 	}
     }
 
-    public void setText(CharSequence text) {
+    public void setText(final CharSequence text) {
 	mPoints_txt.setText(text);
     }
 
@@ -203,50 +202,46 @@ public class Buzzer extends RelativeLayout {
 	return mPlayer;
     }
 
-    public void setPlayer(Player player) {
-	this.mPlayer = player;
+    public void setPlayer(final Player player) {
+	mPlayer = player;
     }
 
     public Boolean getCorrectBuzz() {
 	return mCorrectBuzz;
     }
 
-    public void setCorrectBuzz(Boolean correctBuzz) {
-	this.mCorrectBuzz = correctBuzz;
+    public void setCorrectBuzz(final Boolean correctBuzz) {
+	mCorrectBuzz = correctBuzz;
     }
 
     public Boolean getTooLateBuzz() {
 	return mTooLateBuzz;
     }
 
-    public void setTooLateBuzz(Boolean tooLateBuzz) {
-	this.mTooLateBuzz = tooLateBuzz;
+    public void setTooLateBuzz(final Boolean tooLateBuzz) {
+	mTooLateBuzz = tooLateBuzz;
     }
-    
+
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(final Canvas canvas) {
 	if (mFlipped) {
 
 	    canvas.save();
-	    float py = this.getHeight() / 2.0f;
-	    float px = this.getWidth() / 2.0f;
+	    final float py = getHeight() / 2.0f;
+	    final float px = getWidth() / 2.0f;
 	    canvas.rotate(180, px, py);
 	    super.dispatchDraw(canvas);
-	    
+
 	    canvas.restore();
 	} else {
 	    super.dispatchDraw(canvas);
 	}
     }
 
-    private void onMove(MotionEvent event) {
-	int y = (int) event.getY();
-	int delta = (mPreviousY - y) * 2;
-	mPreviousY = y;
-	int red = 0, green = 0, blue = 0;
-	blue = mColor & 0xFF;
-	green = (mColor >> 8) & 0xFF;
-	red = (mColor >> 16) & 0xFF;
+    private void changeColor(final int delta) {
+	int blue = mColor & 0xFF;
+	int green = (mColor >> 8) & 0xFF;
+	int red = (mColor >> 16) & 0xFF;
 	Log.v("tag", "before rgb:" + red + " " + green + " " + blue);
 	if (delta > 0) {
 	    if (red == 255 && green < 255 && blue == 0) {
@@ -290,8 +285,17 @@ public class Buzzer extends RelativeLayout {
 
 	Log.v("tag", "rgb:" + red + green + blue);
 
-	setColor(new Color().rgb(isHex(red), isHex(green), isHex(blue)));
+	new Color();
+	setColor(Color.rgb(isHex(red), isHex(green), isHex(blue)));
 	invalidate();
+    }
+
+    private void onMove(final MotionEvent event) {
+	final int y = (int) event.getY();
+	final int delta = (mPreviousY - y) * 2;
+	mPreviousY = y;
+	changeColor(delta);
+
     }
 
 }

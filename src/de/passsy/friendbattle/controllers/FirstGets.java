@@ -11,8 +11,8 @@ public class FirstGets extends PointProvider {
     private Boolean mSolved = false;
 
     @Override
-    public Correctness evalCorrectness(Boolean correctness, Player player,
-	    final MiniGame miniGame) {
+    public Correctness evalCorrectness(final Boolean correctness,
+	    final Player player, final MiniGame miniGame) {
 	Correctness result = Correctness.incorrect;
 	if (correctness) {
 	    // Game is correct
@@ -26,10 +26,10 @@ public class FirstGets extends PointProvider {
 		result = Correctness.toolate;
 	    }
 	    // now no one can get points
-	    mSolved = true; 
+	    mSolved = true;
 	    // start next game in 1 second
 
-	    GoodTimer timer = new GoodTimer(1000, false);
+	    final GoodTimer timer = new GoodTimer(1000, false);
 	    timer.setOnTimerListener(new OnTimerListener() {
 
 		@Override

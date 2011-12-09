@@ -29,13 +29,13 @@ public class FriendBattleGame extends Activity {
     private static final int MAX_PLAYERS = 6;
 
     private int mDifficulty;
-    private List<Player> mPlayers = new ArrayList<Player>();
+    private final List<Player> mPlayers = new ArrayList<Player>();
     private int mPlayerNumber;
-    private List<Buzzer> mBuzzer = new ArrayList<Buzzer>();
+    private final List<Buzzer> mBuzzer = new ArrayList<Buzzer>();
     private FrameLayout mGameModule;
     private MiniGame mCurrentGame;
 
-    private Screen_Winner mWinnerScreen = new Screen_Winner();
+    private final Screen_Winner mWinnerScreen = new Screen_Winner();
 
     private GameCycle mGameCycle;
 
@@ -45,7 +45,7 @@ public class FriendBattleGame extends Activity {
     private TextViewFlipped mTop_txt;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	// hide titlebar
 	requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -62,22 +62,22 @@ public class FriendBattleGame extends Activity {
 	loadGames();
 	mGameCycle.start();
     }
-    
-    public void restart(){
+
+    public void restart() {
 	loadGames();
-	for(Player player:mPlayers){
+	for (final Player player : mPlayers) {
 	    player.setPoints(0);
 	}
 	mGameCycle.start();
     }
 
     private void createListeners() {
-	for (Buzzer buzzer : mBuzzer) {
+	for (final Buzzer buzzer : mBuzzer) {
 	    buzzer.setOnBuzzListener(new OnBuzzListener() {
 
 		@Override
-		public void onBuzz(Buzzer btn) {
-		    MiniGame.Correctness correctness = mGameCycle
+		public void onBuzz(final Buzzer btn) {
+		    final MiniGame.Correctness correctness = mGameCycle
 			    .getCurrentGame().onGuess(btn.getPlayer());
 		    dealPoints(correctness, btn.getPlayer());
 		}
@@ -86,7 +86,7 @@ public class FriendBattleGame extends Activity {
 
     }
 
-    protected void dealPoints(Correctness correctness, Player player) {
+    protected void dealPoints(final Correctness correctness, final Player player) {
 	switch (correctness) {
 	case correct:
 
@@ -113,9 +113,9 @@ public class FriendBattleGame extends Activity {
     private void findViews() {
 	// find Buzzers
 	for (int i = 0; i < MAX_PLAYERS; i++) {
-	    String buzzerID = "buzzer" + i;
-	    Buzzer buzzer = (Buzzer) findViewById(getResources().getIdentifier(
-		    buzzerID, "id", "de.passsy.friendbattle"));
+	    final String buzzerID = "buzzer" + i;
+	    final Buzzer buzzer = (Buzzer) findViewById(getResources()
+		    .getIdentifier(buzzerID, "id", "de.passsy.friendbattle"));
 	    mBuzzer.add(buzzer);
 	}
 	mGameModule = (FrameLayout) findViewById(R.id.gamemodule);
@@ -124,21 +124,21 @@ public class FriendBattleGame extends Activity {
 	mBot_txt = (TextViewFlipped) findViewById(R.id.bot_txt);
 
 	mWinnerScreen.setOnRestartListener(new OnRestartListener() {
-	    
+
 	    @Override
 	    public void onRestart() {
 		restart();
-		
+
 	    }
 	});
     }
 
     private void readIntent() {
-	Bundle extras = getIntent().getExtras();
+	final Bundle extras = getIntent().getExtras();
 	mDifficulty = extras.getInt("difficulty");
 	mPlayerNumber = extras.getInt("players");
 	mRounds = extras.getInt("rounds");
-	int colors[] = extras.getIntArray("buzzercolors");
+	final int colors[] = extras.getIntArray("buzzercolors");
 	for (int i = 0; i < colors.length; i++) {
 	    mBuzzer.get(i).setColor(colors[i]);
 	}
@@ -148,7 +148,7 @@ public class FriendBattleGame extends Activity {
     private void linkPlayerAndButtons() {
 
 	for (int i = 1; i <= mPlayerNumber; i++) {
-	    Player player = new Player(i);
+	    final Player player = new Player(i);
 	    player.setBuzzer(mBuzzer.get(i - 1));
 	    mPlayers.add(player);
 	    player.getBuzzer().setPlayer(player);
@@ -163,38 +163,40 @@ public class FriendBattleGame extends Activity {
     }
 
     private void loadGames() {
-	mGameCycle = new GameCycle(getApplicationContext(),mGameModule, mRounds);
+	mGameCycle = new GameCycle(getApplicationContext(), mGameModule,
+		mRounds);
 	mGameCycle.setonEndListener(new OnEndListener() {
 
 	    @Override
-	    public void onEnd(GameCycle cycle) {
+	    public void onEnd(final GameCycle cycle) {
 		showResults();
 	    }
 	});
 	mGameCycle.setOnNewGameListener(new OnNewGameListener() {
-	    
+
 	    @Override
-	    public void onNewGame(CharSequence name, CharSequence description) {
+	    public void onNewGame(final CharSequence name,
+		    final CharSequence description) {
 		setDescription(description);
-		//Tools.toast(name);
+		// Tools.toast(name);
 	    }
 	});
     }
 
     protected void showResults() {
 	mGameModule.addView(mWinnerScreen);
-	//mWinnerScreen.setWinner(getWinner());
+	// mWinnerScreen.setWinner(getWinner());
 	setText("Player" + getWinner() + " won the Game");
     }
-    
-    private void setText(CharSequence text){
+
+    private void setText(final CharSequence text) {
 	mTop_txt.setText(text);
 	mBot_txt.setText(text);
     }
 
     private int getWinner() {
 	Player winner = new Player(-1);
-	for (Player player : mPlayers) {
+	for (final Player player : mPlayers) {
 
 	    if (player.getPoints() > winner.getPoints()) {
 		winner = player;
@@ -202,12 +204,13 @@ public class FriendBattleGame extends Activity {
 	}
 	return winner.getId();
     }
-    
+
     /**
      * sets the description of the current game
+     * 
      * @param text
      */
-    public void setDescription(CharSequence text){
+    public void setDescription(final CharSequence text) {
 	mBot_txt.setText(text);
 	mTop_txt.setText(text);
     }
