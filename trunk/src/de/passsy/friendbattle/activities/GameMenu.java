@@ -3,14 +3,11 @@ package de.passsy.friendbattle.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -19,8 +16,9 @@ import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.R;
 import de.passsy.friendbattle.controls.Buzzer;
 import de.passsy.friendbattle.games.ClickWhenWhite;
+import de.passsy.friendbattle.utility.MultiTouchActivity;
 
-public class GameMenu extends Activity {
+public class GameMenu extends MultiTouchActivity {
 
     public final static String GAME_PREF = "GamePreferences";
     private int mPlayers = 6;
@@ -43,12 +41,6 @@ public class GameMenu extends Activity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	// hide titlebar
-	requestWindowFeature(Window.FEATURE_NO_TITLE);
-	// run in fullscreenmode
-	getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	getWindow().clearFlags(
-		WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 	FriendBattle.setCurrentActivity(this);
 	setContentView(R.layout.gamemenu);
 
@@ -81,18 +73,19 @@ public class GameMenu extends Activity {
 	    }
 
 	    @Override
-	    public void onProgressChanged(final SeekBar seekBar,
-		    final int progress, final boolean fromUser) {
+	    public void onProgressChanged(final SeekBar seekBar, final int progress,
+		    final boolean fromUser) {
 		setPlayers(seekBar.getProgress() + 2);
 	    }
 	});
 
 	for (int i = 0; i < 6; i++) {
 	    final String buzzerID = "buzzer" + i;
-	    final Buzzer buzzer = (Buzzer) findViewById(getResources()
-		    .getIdentifier(buzzerID, "id", "de.passsy.friendbattle"));
+	    final Buzzer buzzer = (Buzzer) findViewById(getResources().getIdentifier(buzzerID,
+		    "id", "de.passsy.friendbattle"));
 	    mBuzzer.add(buzzer);
 	    buzzer.setText("Player " + (i + 1));
+	    buzzer.setOnTouchListener(this);
 	}
 
     }
@@ -101,11 +94,8 @@ public class GameMenu extends Activity {
 	final SharedPreferences settings = getSharedPreferences(GAME_PREF, 0);
 	// if the Game Version is different run a firstStart();
 	if (settings.getString("version", null) == mGameVersion) {
-	    Log.v("tag", settings.getString("version", "null") + " =? "
-		    + mGameVersion);
-	    Log.v("tag",
-		    mGameVersion.equals(settings.getString("version", "null"))
-			    + "");
+	    Log.v("tag", settings.getString("version", "null") + " =? " + mGameVersion);
+	    Log.v("tag", mGameVersion.equals(settings.getString("version", "null")) + "");
 	    getGames();
 	    firstStart();
 	}

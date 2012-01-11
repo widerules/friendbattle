@@ -2,14 +2,12 @@ package de.passsy.friendbattle.controls;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,11 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import de.passsy.friendbattle.R;
 import de.passsy.friendbattle.data.Player;
+import de.passsy.friendbattle.games.MiniGame.Correctness;
+import de.passsy.friendbattle.utility.GoodTimer;
+import de.passsy.friendbattle.utility.GoodTimer.OnTimerListener;
 
 public class Buzzer extends RelativeLayout {
 
     public interface OnBuzzListener {
-	public abstract void onBuzz(Buzzer btn);
+	public abstract Correctness onBuzz(Buzzer btn);
     }
 
     private OnBuzzListener mBuzzListener;
@@ -37,6 +38,45 @@ public class Buzzer extends RelativeLayout {
     private Boolean mAllowUserChangeColor = true;
 
     private int mPreviousY;
+
+    private OnTouchListener normalOnTouchListener = new OnTouchListener() {
+
+	@Override
+	public boolean onTouch(final View v, final MotionEvent event) {
+	    int num = event.getPointerCount();
+	    for (int a = 0; a < num; a++) {
+		int x = (int) event.getX(event.getPointerId(a));
+		int y = (int) event.getY(event.getPointerId(a));
+		// Log.d("tag", "pointer_" + event.getPointerId(a) +
+		// ": x = " + x + ", y = " + y);
+	    }
+
+	    final int action = event.getAction();
+	    switch (action) {
+	    case MotionEvent.ACTION_DOWN:
+		mPreviousY = (int) event.getY();
+
+		if (mBuzzListener != null && mPlayer != null) {
+		    showGuessState(mBuzzListener.onBuzz(Buzzer.this));
+
+		}
+		break;
+
+	    case MotionEvent.ACTION_MOVE:
+		onMove(event);
+		break;
+
+	    case MotionEvent.ACTION_UP:
+		mBackground.setImageResource(R.drawable.buzzerupdown);
+
+	    case MotionEvent.ACTION_CANCEL:
+		break;
+
+	    }
+	    return true;
+	}
+
+    };
 
     public Buzzer(final Context context) {
 	super(context);
@@ -54,53 +94,11 @@ public class Buzzer extends RelativeLayout {
 	LayoutInflater.from(context).inflate(R.layout.buzzer, this, true);
 	findViews();
 	setRandomColor();
-	setOnTouchListener(new OnTouchListener() {
-
-	    @Override
-	    public boolean onTouch(final View v, final MotionEvent event) {
-		final int action = event.getAction();
-		switch (action) {
-		case MotionEvent.ACTION_DOWN:
-		    mPreviousY = (int) event.getY();
-
-		    if (mBuzzListener != null && mPlayer != null) {
-			mBuzzListener.onBuzz(Buzzer.this);
-			int image = 0;
-
-			if (mTooLateBuzz) {
-			    image = R.drawable.buzzerdownup_gray;
-			} else if (mCorrectBuzz) {
-			    image = R.drawable.buzzerdownup_green;
-			} else {
-			    image = R.drawable.buzzerdownup_red;
-			}
-			mBackground.setImageResource(image);
-			setCorrectBuzz(false);
-			setTooLateBuzz(false);
-		    }
-		    break;
-
-		case MotionEvent.ACTION_MOVE:
-		    onMove(event);
-		    break;
-
-		case MotionEvent.ACTION_UP:
-
-		    mBackground.setImageResource(R.drawable.buzzerupdown);
-
-		case MotionEvent.ACTION_CANCEL:
-		    break;
-		}
-
-		return true;
-	    }
-
-	});
+	setOnTouchListener(normalOnTouchListener);
 
     }
 
     private void setRandomColor() {
-	final Random rand = new Random();
 	final List<Integer> rgb = new ArrayList<Integer>();
 
 	final int red = (int) (Math.round(Math.random()) * 255);
@@ -113,9 +111,9 @@ public class Buzzer extends RelativeLayout {
 
 	rgb.get((int) (Math.round(Math.random())));
 
-	Log.v("tag", "random" + red + " " + green + " " + blue);
+	// Log.v("tag", "random" + red + " " + green + " " + blue);
 	if (red + green + blue == 3 * 255 || red + green + blue == 0) {
-	    Log.v("tag", "wrong colors");
+	    // Log.v("tag", "wrong colors");
 	    setRandomColor();
 	    return;
 	} else {
@@ -175,16 +173,13 @@ public class Buzzer extends RelativeLayout {
      * @param context
      * @param attrs
      */
-    private void analyseAttributes(final Context context,
-	    final AttributeSet attrs) {
+    private void analyseAttributes(final Context context, final AttributeSet attrs) {
 
 	if (attrs != null) {
 
-	    final TypedArray attributes = context.obtainStyledAttributes(attrs,
-		    R.styleable.Buzzer);
+	    final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.Buzzer);
 
-	    final boolean flipped = attributes.getBoolean(
-		    R.styleable.Buzzer_flipped, false);
+	    final boolean flipped = attributes.getBoolean(R.styleable.Buzzer_flipped, false);
 	    if (flipped) {
 		mFlipped = true;
 	    }
@@ -202,22 +197,6 @@ public class Buzzer extends RelativeLayout {
 
     public void setPlayer(final Player player) {
 	mPlayer = player;
-    }
-
-    public Boolean getCorrectBuzz() {
-	return mCorrectBuzz;
-    }
-
-    public void setCorrectBuzz(final Boolean correctBuzz) {
-	mCorrectBuzz = correctBuzz;
-    }
-
-    public Boolean getTooLateBuzz() {
-	return mTooLateBuzz;
-    }
-
-    public void setTooLateBuzz(final Boolean tooLateBuzz) {
-	mTooLateBuzz = tooLateBuzz;
     }
 
     @Override
@@ -244,7 +223,7 @@ public class Buzzer extends RelativeLayout {
 	int blue = mColor & 0xFF;
 	int green = (mColor >> 8) & 0xFF;
 	int red = (mColor >> 16) & 0xFF;
-	Log.v("tag", "before rgb:" + red + " " + green + " " + blue);
+	// Log.v("tag", "before rgb:" + red + " " + green + " " + blue);
 	if (delta > 0) {
 	    if (red == 255 && green < 255 && blue == 0) {
 		green += Math.abs(delta);
@@ -285,12 +264,10 @@ public class Buzzer extends RelativeLayout {
 	    }
 	}
 
-	Log.v("tag", "rgb:" + red + green + blue);
+	// Log.v("tag", "rgb:" + red + green + blue);
 
-	new Color();
 	setColor(Color.rgb(isHex(red), isHex(green), isHex(blue)));
-	// mPoints_txt.setTextColor(IdealTextColor(isHex(red),
-	// isHex(green),isHex(blue)));
+	// mPoints_txt.setTextColor(IdealTextColor(isHex(red),isHex(green),isHex(blue)));
 	invalidate();
     }
 
@@ -309,7 +286,7 @@ public class Buzzer extends RelativeLayout {
 	int bgDelta = (int) ((r * 0.299) + (g * 0.587) + (b * 0.114));
 
 	int foreColor = (255 - bgDelta < threshold) ? Color.BLACK : Color.WHITE;
-	Log.v("tag", "" + foreColor);
+	// Log.v("tag", "" + foreColor);
 	return foreColor;
     }
 
@@ -321,4 +298,52 @@ public class Buzzer extends RelativeLayout {
 	this.mAllowUserChangeColor = mAllowChangeColor;
     }
 
+    public void freeze(boolean b) {
+	if (b) {
+	    mBackground.setImageResource(R.drawable.buzzerdownup_gray);
+	    setOnTouchListener(new OnTouchListener() {
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+		    return false;
+		}
+	    });
+	} else {
+	    mBackground.setImageResource(R.drawable.buzzerdownup);
+	    setOnTouchListener(normalOnTouchListener);
+	}
+
+    }
+
+    public void showGuessState(Correctness correctness) {
+
+	int colorImage;
+	switch (correctness) {
+	case correct:
+	    colorImage = R.drawable.buzzerdownup_green;
+	    break;
+	case incorrect:
+	    colorImage = R.drawable.buzzerdownup_red;
+	    break;
+
+	default:
+	    colorImage = R.drawable.buzzerdownup_gray;
+	    break;
+	}
+
+	mBackground.setImageResource(colorImage);
+	GoodTimer timer = new GoodTimer(1000, false);
+	timer.setOnTimerListener(new OnTimerListener() {
+
+	    @Override
+	    public void onTimer() {
+		changeToNormalState();
+	    }
+	});
+	timer.start();
+    }
+
+    public void changeToNormalState() {
+	mBackground.setImageResource(R.drawable.buzzerupdown);
+    }
 }

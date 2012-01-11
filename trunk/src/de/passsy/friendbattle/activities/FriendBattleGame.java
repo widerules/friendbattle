@@ -3,12 +3,8 @@ package de.passsy.friendbattle.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import de.passsy.friendbattle.FriendBattle;
 import de.passsy.friendbattle.R;
@@ -23,8 +19,9 @@ import de.passsy.friendbattle.games.MiniGame;
 import de.passsy.friendbattle.games.MiniGame.Correctness;
 import de.passsy.friendbattle.screenlayouts.Screen_Winner;
 import de.passsy.friendbattle.screenlayouts.Screen_Winner.OnRestartListener;
+import de.passsy.friendbattle.utility.MultiTouchActivity;
 
-public class FriendBattleGame extends Activity {
+public class FriendBattleGame extends MultiTouchActivity {
 
     private static final int MAX_PLAYERS = 6;
 
@@ -45,14 +42,8 @@ public class FriendBattleGame extends Activity {
     private TextViewFlipped mTop_txt;
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	// hide titlebar
-	requestWindowFeature(Window.FEATURE_NO_TITLE);
-	// run in fullscreenmode
-	getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	getWindow().clearFlags(
-		WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 	FriendBattle.setCurrentActivity(this);
 	setContentView(R.layout.friendbattle);
 	findViews();
@@ -73,13 +64,15 @@ public class FriendBattleGame extends Activity {
 
     private void createListeners() {
 	for (final Buzzer buzzer : mBuzzer) {
+	    buzzer.setOnTouchListener(this);
 	    buzzer.setOnBuzzListener(new OnBuzzListener() {
 
 		@Override
-		public void onBuzz(final Buzzer btn) {
-		    final MiniGame.Correctness correctness = mGameCycle
-			    .getCurrentGame().onGuess(btn.getPlayer());
+		public Correctness onBuzz(final Buzzer btn) {
+		    final MiniGame.Correctness correctness = mGameCycle.getCurrentGame().onGuess(
+			    btn.getPlayer());
 		    dealPoints(correctness, btn.getPlayer());
+		    return correctness;
 		}
 	    });
 	}
@@ -90,21 +83,26 @@ public class FriendBattleGame extends Activity {
 	switch (correctness) {
 	case correct:
 
-	    player.getBuzzer().setCorrectBuzz(true);
 	    player.setPoints(player.getPoints() + 1);
 	    break;
 
 	case incorrect:
-	    player.getBuzzer().setCorrectBuzz(false);
 	    player.setPoints(player.getPoints() - 1);
 	    break;
 
 	case toolate:
 
-	    player.getBuzzer().setTooLateBuzz(true);
 	    break;
+
+	case unclear:
+	    player.getBuzzer().freeze(true);
+	    break;
+
+	case tooearly:
+	    player.setPoints(player.getPoints() - 1);
+	    break;
+
 	default:
-	    player.getBuzzer().setTooLateBuzz(true);
 	    break;
 	}
 
@@ -114,8 +112,8 @@ public class FriendBattleGame extends Activity {
 	// find Buzzers
 	for (int i = 0; i < MAX_PLAYERS; i++) {
 	    final String buzzerID = "buzzer" + i;
-	    final Buzzer buzzer = (Buzzer) findViewById(getResources()
-		    .getIdentifier(buzzerID, "id", "de.passsy.friendbattle"));
+	    final Buzzer buzzer = (Buzzer) findViewById(getResources().getIdentifier(buzzerID,
+		    "id", "de.passsy.friendbattle"));
 	    mBuzzer.add(buzzer);
 	}
 	mGameModule = (FrameLayout) findViewById(R.id.gamemodule);
@@ -143,7 +141,7 @@ public class FriendBattleGame extends Activity {
 	    mBuzzer.get(i).setColor(colors[i]);
 	    mBuzzer.get(i).setAllowUserChangeColor(false);
 	}
-	Log.v("tag", mRounds + "");
+	// Log.v("tag", mRounds + "");
     }
 
     private void linkPlayerAndButtons() {
@@ -164,8 +162,7 @@ public class FriendBattleGame extends Activity {
     }
 
     private void loadGames() {
-	mGameCycle = new GameCycle(getApplicationContext(), mGameModule,
-		mRounds);
+	mGameCycle = new GameCycle(getApplicationContext(), mGameModule, mRounds);
 	mGameCycle.setonEndListener(new OnEndListener() {
 
 	    @Override
@@ -176,10 +173,8 @@ public class FriendBattleGame extends Activity {
 	mGameCycle.setOnNewGameListener(new OnNewGameListener() {
 
 	    @Override
-	    public void onNewGame(final CharSequence name,
-		    final CharSequence description) {
+	    public void onNewGame(final CharSequence name, final CharSequence description) {
 		setDescription(description);
-		// Tools.toast(name);
 	    }
 	});
     }
