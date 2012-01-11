@@ -3,17 +3,24 @@ package de.passsy.friendbattle.controllers;
 import de.passsy.friendbattle.data.Player;
 import de.passsy.friendbattle.games.MiniGame;
 import de.passsy.friendbattle.games.MiniGame.Correctness;
-import de.passsy.friendbattle.utility.GoodTimer;
-import de.passsy.friendbattle.utility.GoodTimer.OnTimerListener;
 
 public class FirstGets extends PointProvider {
+
+    public FirstGets(MiniGame miniGame) {
+	super(miniGame);
+	// TODO Auto-generated constructor stub
+    }
 
     private Boolean mSolved = false;
 
     @Override
-    public Correctness evalCorrectness(final Boolean correctness,
-	    final Player player, final MiniGame miniGame) {
+    public Correctness evalCorrectness(final Boolean correctness, final Player player) {
 	Correctness result = Correctness.incorrect;
+
+	if (mMiniGame.getPrepare()) {
+	    return Correctness.tooearly;
+	}
+
 	if (correctness) {
 	    // Game is correct
 	    if (!mSolved) {
@@ -28,16 +35,7 @@ public class FirstGets extends PointProvider {
 	    // now no one can get points
 	    mSolved = true;
 	    // start next game in 1 second
-
-	    final GoodTimer timer = new GoodTimer(1000, false);
-	    timer.setOnTimerListener(new OnTimerListener() {
-
-		@Override
-		public void onTimer() {
-		    miniGame.getOnNextGameListener().onNextGame(miniGame);
-		}
-	    });
-	    timer.start();
+	    // TODO move to results screen
 
 	} else {
 	    // Game isn't correct
@@ -46,8 +44,16 @@ public class FirstGets extends PointProvider {
 		result = Correctness.incorrect;
 	    }
 	}
+
+	showResults();
+
 	return result;
 
+    }
+
+    @Override
+    public void showResults() {
+	super.showResults();
     }
 
 }

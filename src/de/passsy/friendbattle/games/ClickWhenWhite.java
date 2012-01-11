@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 
 public class ClickWhenWhite extends MiniGame {
 
@@ -36,7 +35,7 @@ public class ClickWhenWhite extends MiniGame {
 
     @Override
     protected void showIntroductions(final int seconds) {
-	Log.v("tag", "introduction");
+	// Log.v("tag", "introduction");
     }
 
     @Override

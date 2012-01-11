@@ -4,6 +4,7 @@ import java.util.Timer;
 
 import android.content.Context;
 import android.os.Handler;
+import de.passsy.friendbattle.controllers.CloseGets;
 import de.passsy.friendbattle.screenlayouts.Screen_TextViewsCenter;
 import de.passsy.friendbattle.utility.GoodTimer;
 import de.passsy.friendbattle.utility.GoodTimer.OnTimerListener;
@@ -33,6 +34,9 @@ public class GuessWhen extends MiniGame {
 		mTextViews.setText("" + time);
 	    } else {
 		mTextViews.setText("?");
+		if (getPrepare()) {
+		    setPrepare(false);
+		}
 	    }
 	    if (time == 0) {
 		setCorrectness(true);
@@ -51,10 +55,13 @@ public class GuessWhen extends MiniGame {
 
     public GuessWhen(final Context context) {
 	super(context);
+	setPrepare(true);
 	mTextViews = new Screen_TextViewsCenter(context);
 	this.addView(mTextViews);
+
 	mTextViews.setTextSize(20);
 	mTextViews.setText("?");
+	mCurrentPointprovider = new CloseGets(this);
     }
 
     @Override
@@ -65,9 +72,8 @@ public class GuessWhen extends MiniGame {
     @Override
     public void startGame() {
 	final int time = (int) Math.round((Math.random() * 1000)) + 500;
-
+	((CloseGets) mCurrentPointprovider).setDelta(time);
 	timer = new GoodTimer(time, true);
-
 	timer.setOnTimerListener(onTimerListener);
 	timer.start();
     }

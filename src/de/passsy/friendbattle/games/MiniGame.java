@@ -1,9 +1,6 @@
 package de.passsy.friendbattle.games;
 
-import java.util.Timer;
-
 import android.content.Context;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -25,10 +22,8 @@ public abstract class MiniGame extends RelativeLayout {
     public interface OnNextGameListener {
 	/**
 	 * fired if the current MiniGame is solved and a new game should launch
-	 * 
-	 * @param game
 	 */
-	public abstract void onNextGame(MiniGame game);
+	public abstract void onNextGame();
     }
 
     /**
@@ -38,7 +33,7 @@ public abstract class MiniGame extends RelativeLayout {
      * 
      */
     public enum Correctness {
-	correct, incorrect, toolate;
+	correct, incorrect, toolate, tooearly, unclear;
     }
 
     /**
@@ -63,26 +58,9 @@ public abstract class MiniGame extends RelativeLayout {
     private boolean mSolved = false;
 
     /**
-     * timer that runs if the Game is solved by a User to start the next Game
+     * if true, the Game is not solvable. Players can't get/lose points
      */
-    private final Timer mNewGameTimer = new Timer();
-
-    /**
-     * Handler to run the mFireTimer from the Timer thread
-     */
-    private final Handler mHandler = new Handler();
-
-    /**
-     * This Runnable is Called from the mNewGameTimer
-     */
-    final Runnable mNextGameTimer = new Runnable() {
-	@Override
-	public void run() {
-	    if (mNextGameListener != null) {
-		mNextGameListener.onNextGame(MiniGame.this);
-	    }
-	}
-    };
+    private boolean mPrepare = false;
 
     /**
      * Rounds per Game
@@ -92,7 +70,7 @@ public abstract class MiniGame extends RelativeLayout {
     /**
      * holds the current PointProvider
      */
-    public PointProvider mCurrentPointprovider = new FirstGets();
+    public PointProvider mCurrentPointprovider = new FirstGets(this);
 
     /**
      * @return true if the Game is solved
@@ -136,6 +114,24 @@ public abstract class MiniGame extends RelativeLayout {
     }
 
     /**
+     * true = unsolvable
+     * 
+     * @param b
+     */
+    public void setPrepare(final boolean b) {
+	mPrepare = b;
+    }
+
+    /**
+     * if true the Players can't get/lose points
+     * 
+     * @return
+     */
+    public boolean getPrepare() {
+	return mPrepare;
+    }
+
+    /**
      * should only set true, if the players are able to solve the game
      * 
      * @param isCorrect
@@ -143,6 +139,7 @@ public abstract class MiniGame extends RelativeLayout {
      */
     public void setCorrectness(final boolean isCorrect) {
 	mCorrectness = isCorrect;
+	mCurrentPointprovider.setCorrectness(true);
     }
 
     /**
@@ -172,8 +169,7 @@ public abstract class MiniGame extends RelativeLayout {
      */
     public Correctness onGuess(final Player player) {
 
-	return mCurrentPointprovider.evalCorrectness(getCorrectness(), player,
-		this);
+	return mCurrentPointprovider.evalCorrectness(getCorrectness(), player);
 
     };
 
@@ -210,7 +206,7 @@ public abstract class MiniGame extends RelativeLayout {
 
     public void onNextGame(final View v) {
 	if (mNextGameListener != null) {
-	    mNextGameListener.onNextGame(this);
+	    mNextGameListener.onNextGame();
 	}
     }
 
